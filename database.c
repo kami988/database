@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-#define bucket_size 1009 //(素数)
+#define bucket_size 103 //(素数)
 #define bucket_pass 32749391 //32,749,391(素数)
 
 typedef struct _node{
@@ -36,12 +36,6 @@ typedef struct _node_tree{
     struct _node_tree *right;
 } node_tree;
 
-int resister_DATA();
-int delete_DATA();
-int change_DATA();
-int search_DATA();
-int view_DATA();
-
 int get_hashval(char *key) {
     int hashval = 0;
 
@@ -67,7 +61,7 @@ int init_DATA(node **DATA) {// ハッシュテーブルをNULLで初期化
     }
 }
 
-int insert_DATA(node **DATA) {
+int insert_DATA(node **DATA, int *rootval) {
     char c;
     int num;
     int i,j;
@@ -78,10 +72,17 @@ int insert_DATA(node **DATA) {
     node *sample, *sample_next, *sample_back;
     FILE *fi = fopen("DATA.csv","r");
     if(fgetc(fi) == EOF){ //ファイルが空なら終わり
+        char str_root[] = "root";
+        *rootval = get_passval(str_root);
         return 1;
     }
     else fseek(fi, 0, SEEK_SET);
-
+    fscanf(fi,"%d",rootval);
+    fgetc(fi);//改行読み
+    if(fgetc(fi) == EOF){ //登録データがなければ終わり
+        return 1;
+    }
+    else fseek(fi, -1, SEEK_CUR);
     while(1){
         fscanf(fi,"%[^,],%[^,],%[^,],%[^,],%[^,],%d,%[^,],%[^,],%[^,],%d,%d,%d,%[^,],%d,%d",
                 ex_name_ruby[0],ex_name_ruby[1],ex_name[0],ex_name[1],ex_nickname,&ex_postal,
@@ -116,7 +117,6 @@ int insert_DATA(node **DATA) {
         strcpy(sample->job, ex_job);
 
         num = get_hashval(ex_mail); //メールアドレスからハッシュ値を生成
-        printf("%d\n",num);
         if(DATA[num] == NULL) {//衝突なし
             DATA[num] = sample;
         }
@@ -134,18 +134,18 @@ int insert_DATA(node **DATA) {
     fclose(fi);
 }
 
-int push_file(node **DATA){
-    int i,first;
+int push_file(node **DATA, int rootval){
+    int i;
     node *chain;
     FILE *fo = fopen("DATA.csv","w");
-    first = 1;
+    char str[] = "root";
+    fprintf(fo,"%d",rootval);
     for(i = 0; i < bucket_size; i++){
         if(DATA[i] != NULL){
             chain = DATA[i];
             // リスト内部を走査して出力する
             while(chain != NULL){
-                if(first==1) first=0;
-                else fprintf(fo,"\n");
+                fprintf(fo,"\n");
                 fprintf(fo,"%s,%s,%s,%s,%s,%d,%s,%s,%s,%d,%d,%d,%s,%d,%d",
                 chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                 chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,chain->sex,chain->passval);
@@ -156,7 +156,7 @@ int push_file(node **DATA){
     fclose(fo);
 }
 
-int print_DATA(node **DATA) {
+int print_DATA(node **DATA, int root, int rootval) {
     int i;
     node *chain;
     char *name[3] = {"男性","女性","その他の性別"};
@@ -174,18 +174,57 @@ int print_DATA(node **DATA) {
     }
 }
 
+int root_system(int *root, int *rootval){
+    char str[256],str2[256];
+    int num;
+    printf("管理者権限の有無を選んでください\n");
+    printf("1：あり　0：なし\n");
+    scanf("%d",root);
+    if(*root == 1){
+        printf("パスワードを入力してください。(初期パスワード：root)\n");
+        scanf("%s",str);
+        if(get_passval(str) != *rootval){
+            printf("パスワードが違います。もう1度入力してください。（管理者権限でログインしない：0）\n");
+            scanf("%s",str);
+            if(strlen(str)==1 && str[0]=='0') {
+                *root = 0;
+                return 1;
+            }
+        }
+        printf("パスワードを変更しますか？");
+        printf("1：はい　0：いいえ\n");
+        scanf("%d",&num);
+        if(num == 1){
+            printf("新しいパスワードを入力してください。(4字以上)\n");
+            scanf("%s",str);
+            while(strlen(str) < 4){
+                printf("4字以上ではありません。もう1度入力してください。\n");
+                scanf("%s",str);
+            }
+            printf("確認のためもう1度入力してください。\n");
+            scanf("%s",str2);
+            while(strcmp(str,str2)!=0){
+                printf("パスワードが違います。もう1度入力してください。\n");
+                scanf("%s",str);
+                printf("確認のためもう1度入力してください。\n");
+                scanf("%s",str2);
+            }
+            *rootval = get_passval(str);
+            printf("登録が完了しました。\n");
+        }
+    }
+}
+
 int main(int argc, char *argv[]) {
     int i;
-    int num_all = 0;//登録数 (配列番号+1)
-    int root,mode;
+    int root, rootval;
 
     node *DATA[bucket_size];
-    node *DATA_str;
     init_DATA(DATA); //DATAにNULLを代入
-    insert_DATA(DATA);//ファイルからDATAに代入
-    printf("管理者権限の有無を選んでください\n");
-    printf("０：あり　１：なし");
-    //scanf();
+    insert_DATA(DATA,&rootval);//ファイルからDATAに代入
+
+    root_system(&root, &rootval);
+
     while(1){
         printf("モードを選択してください\n");
         printf("0：終了　１：登録　２：変更　３：削除　４：検索　５：全表示\n");
@@ -206,11 +245,11 @@ int main(int argc, char *argv[]) {
         }else if(i==4){
             
         }else if(i==5){
-            print_DATA(DATA);
+            print_DATA(DATA, root, rootval);
         }else{
             printf("入力が不適切です。\n");
         }
     }
-    push_file(DATA);
+    push_file(DATA,rootval);
     return 0;
 }

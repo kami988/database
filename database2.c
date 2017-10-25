@@ -143,17 +143,16 @@ int print_DATA(node **DATA) {
 int main(int argc, char *argv[]) {
     int i;
     int num_all = 0;//登録数 (配列番号+1)
-    int root,mode;
+    int root;
     FILE *fi;
     fi = fopen("DATA.csv","r+"); //読み込み＋書き込み
 
     node *DATA[bucket_size];
-    node *DATA_str;
     init_DATA(DATA); //DATAにNULLを代入
     insert_DATA(fi, DATA);//ファイルからDATAに代入
     printf("管理者権限の有無を選んでください\n");
     printf("０：あり　１：なし");
-    //scanf();
+    scanf("%d",&root);
     printf("モードを選択してください\n");
     printf("0：終了　１：登録　２：変更　３：削除　４：検索　５：全表示\n");
 	print_DATA(DATA);
