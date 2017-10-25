@@ -69,7 +69,7 @@ int insert_DATA(node **DATA, int *rootval) {
     unsigned char ex_name_ruby[2][256], ex_name[2][128], ex_nickname[128], ex_address[512];
 	char ex_tell[20], ex_mail[128];
     unsigned char ex_job[512];
-    node *sample, *sample_next, *sample_back;
+    node *sample, *null_back;
     FILE *fi = fopen("DATA.csv","r");
     if(fgetc(fi) == EOF){ //ファイルが空なら終わり
         char str_root[] = "root";
@@ -117,17 +117,16 @@ int insert_DATA(node **DATA, int *rootval) {
         strcpy(sample->job, ex_job);
 
         num = get_hashval(ex_mail); //メールアドレスからハッシュ値を生成
+        printf("%d\n",num);
         if(DATA[num] == NULL) {//衝突なし
             DATA[num] = sample;
         }
         else{//衝突有り
-            sample_next = DATA[num]->next;//NULLを見つけるポインタ
-            sample_back = DATA[num];//NULLを見つけるポインタの手前
-            while(sample_next != NULL){ //NULLが見つかるまで線形リストを走査
-                sample_back = sample_next;
-                sample_next = sample_next->next;
+            null_back = DATA[num];//NULLを見つけるポインタ
+            while(null_back->next != NULL){ //NULLが見つかるまで線形リストを走査
+                null_back = null_back->next;
             }
-            sample_back->next = sample;//NULLだったポインタの手前のnext(つまりNULL)に代入
+            null_back->next = sample;//NULLだったポインタの手前のnext(つまりNULL)に代入
         }
         if (fgetc(fi) == EOF) break;//ファイルの終わりで終了
     }
