@@ -34,6 +34,12 @@ typedef struct _node_tree{
     struct _node_tree *same;
 } node_tree;
 
+int resister_DATA();
+int delete_DATA();
+int change_DATA();
+int search_DATA();
+int view_DATA();
+
 int get_hashval(char *key) {
     int hashval = 0;
 
@@ -116,7 +122,7 @@ int insert_DATA(FILE *fi, node **DATA) {
     }
 }
 
-int view_DATA(node **DATA, int root) {
+int print_DATA(node **DATA) {
     int i,j;
     node *chain;
     char *name[3] = {"男性","女性","その他の性別"};
@@ -152,24 +158,15 @@ int main(int argc, char *argv[]) {
     printf("0：終了　１：登録　２：変更　３：削除　４：検索　５：全表示\n");
     scanf("%d",&i);
     switch(i){
-        case 0: 
-            break;
-        case 1: 
-            resister_DATA(DATA,root);
-    		break;
-        case 2:
-            change_DATA(DATA,root);
-            break;
-        case 3:
-            delete(DATA,root);
-            break;
-        case 4:
-            search_DATA(DATA,root);
-            break;
-        case 5:
-            view_DATA(DATA,root);
-            break;
+    	case 0: break;
+    	case 1: resister_DATA(fi,DATA);
+    			break;
+    	case 2: break;
+    	case 3: break;
+    	case 4: break;
+    	case 5: break;
     }
+	print_DATA(DATA);
     fclose(fi);
     return 0;
 }

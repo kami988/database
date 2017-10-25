@@ -36,6 +36,11 @@ typedef struct _node_tree{
     struct _node_tree *right;
 } node_tree;
 
+//int resister_DATA(node** DATA, int root);
+//int delete_DATA(node** DATA, int root);
+//int change_DATA(node** DATA, int root);
+//int search_DATA(node** DATA, int root);
+
 int get_hashval(char *key) {
     int hashval = 0;
 
@@ -155,7 +160,7 @@ int push_file(node **DATA, int rootval){
     fclose(fo);
 }
 
-int print_DATA(node **DATA, int root, int rootval) {
+int view_DATA(node **DATA, int root) {
     int i;
     node *chain;
     char *name[3] = {"男性","女性","その他の性別"};
@@ -222,7 +227,7 @@ int main(int argc, char *argv[]) {
     init_DATA(DATA); //DATAにNULLを代入
     insert_DATA(DATA,&rootval);//ファイルからDATAに代入
 
-    root_system(&root, &rootval);
+    root_system(&root, &rootval);//管理者権限
 
     while(1){
         printf("モードを選択してください\n");
@@ -232,19 +237,15 @@ int main(int argc, char *argv[]) {
             printf("終了します。");
             break;
         }else if(i==1){
-            
-        }else if(i==0){
-            
-        }else if(i==1){
-            
+            //resister_DATA(DATA,root);
         }else if(i==2){
-            
+            //change_DATA(DATA,root);
         }else if(i==3){
-            
+            //delete_DATA(DATA,root);
         }else if(i==4){
-            
+            //search_DATA(DATA,root);
         }else if(i==5){
-            print_DATA(DATA, root, rootval);
+            view_DATA(DATA, root);
         }else{
             printf("入力が不適切です。\n");
         }
