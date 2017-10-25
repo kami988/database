@@ -36,10 +36,10 @@ typedef struct _node_tree{
     struct _node_tree *right;
 } node_tree;
 
-//int resister_DATA(node** DATA, int root);
-//int delete_DATA(node** DATA, int root);
-//int change_DATA(node** DATA, int root);
-//int search_DATA(node** DATA, int root);
+int resister_DATA(node** DATA, int root);
+int delete_DATA(node** DATA, int root);
+int change_DATA(node** DATA, int root);
+int search_DATA(node** DATA, int root);
 
 int get_hashval(char *key) {
     int hashval = 0;
@@ -122,7 +122,7 @@ int insert_DATA(node **DATA, int *rootval) {
         strcpy(sample->job, ex_job);
 
         num = get_hashval(ex_mail); //メールアドレスからハッシュ値を生成
-        printf("%d\n",num);
+        //printf("%d\n",num);
         if(DATA[num] == NULL) {//衝突なし
             DATA[num] = sample;
         }
@@ -250,6 +250,6 @@ int main(int argc, char *argv[]) {
             printf("入力が不適切です。\n");
         }
     }
-    push_file(DATA,rootval);
+    push_file(DATA,rootval);//ファイルに書き出し
     return 0;
 }
