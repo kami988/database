@@ -3,8 +3,8 @@
 #include<string.h>
 #include<time.h>
 
-#define bucket_size 3 //(ç´ æ•°)
-#define bucket_pass 32749391 //32,749,391(ç´ æ•°)
+#define bucket_size 3 //(‘f”)
+#define bucket_pass 32749391 //32,749,391(‘f”)
 
 typedef struct _node{
     unsigned char *name_ruby[2];
@@ -42,7 +42,7 @@ int get_passval(char *key) {
     return abs(hashval) % bucket_pass + 1;
 }
 
-int init_DATA(node **DATA) {// ãƒãƒƒã‚·ãƒ¥ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’NULLã§åˆæœŸåŒ–
+int init_DATA(node **DATA) {// ƒnƒbƒVƒ…ƒe[ƒuƒ‹‚ğNULL‚Å‰Šú‰»
     int i;
     for(i = 0; i < bucket_size; i++){
         DATA[i] = NULL;
@@ -52,56 +52,56 @@ int init_DATA(node **DATA) {// ãƒãƒƒã‚·ãƒ¥ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’NULLã§åˆæœŸåŒ–
 int root_system(int *root, int *rootval){
     char str[256],str2[256];
     int num;
-    printf("ç®¡ç†è€…æ¨©é™ã®æœ‰ç„¡ã‚’é¸ã‚“ã§ãã ã•ã„\n");
+    printf("ŠÇ—ÒŒ ŒÀ‚Ì—L–³‚ğ‘I‚ñ‚Å‚­‚¾‚³‚¢\n");
     while(1){
-        printf("ï¼‘ï¼šã‚ã‚Šã€€ï¼ï¼šãªã—\n");
+        printf("‚PF‚ ‚è@‚OF‚È‚µ\n");
         if(scanf(" %d", root) != 1){
-            printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+            printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
             scanf("%*s");
         }
         else if(*root != 0 && *root != 1){
-            printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+            printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
         }
         else break;
     }
     if(*root == 1){
-        printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚(åˆæœŸãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ï¼šroot)\n");
+        printf("ƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B(‰ŠúƒpƒXƒ[ƒhFroot)\n");
         scanf("%s",str);
         while(get_passval(str) != *rootval){
-            printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã„ã¾ã™ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ï¼ˆç®¡ç†è€…æ¨©é™ã§ãƒ­ã‚°ã‚¤ãƒ³ã—ãªã„ï¼š0ï¼‰\n");
+            printf("ƒpƒXƒ[ƒh‚ªˆá‚¢‚Ü‚·B‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢BiŠÇ—ÒŒ ŒÀ‚ÅƒƒOƒCƒ“‚µ‚È‚¢F0j\n");
             scanf("%s",str);
             if(strcmp(str,"0") == 0) {
                 *root = 0;
                 return 1;
             }
         }
-        printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ\n");
+        printf("ƒpƒXƒ[ƒh‚ğ•ÏX‚µ‚Ü‚·‚©H\n");
         while(1){
-            printf("ï¼‘ï¼šã™ã‚‹ã€€ï¼ï¼šã—ãªã„\n");
+            printf("‚PF‚·‚é@‚OF‚µ‚È‚¢\n");
             if(scanf(" %d", &num) != 1){
-                printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+                printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
                 scanf("%*s");
             }
             else if(num != 0 && num != 1){
-                printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+                printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
             }
             else break;
         }
         while(num == 1){
-            printf("æ–°ã—ã„ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚(4å­—ä»¥ä¸Š)\n");
+            printf("V‚µ‚¢ƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B(4šˆÈã)\n");
             scanf("%s",str);
             while(strlen(str) < 4){
-                printf("4å­—ä»¥ä¸Šã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
+                printf("4šˆÈã‚Å‚Í‚ ‚è‚Ü‚¹‚ñB‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
                 scanf("%s",str);
             }
-            printf("ç¢ºèªã®ãŸã‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
+            printf("Šm”F‚Ì‚½‚ß‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
             scanf("%s",str2);
             if(strcmp(str,str2)!=0){
-                printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã›ã‚“ã§ã—ãŸã€‚ç™»éŒ²ã—ç›´ã—ã¦ãã ã•ã„ã€‚\n");
+                printf("ƒpƒXƒ[ƒh‚ªˆê’v‚µ‚Ü‚¹‚ñ‚Å‚µ‚½B“o˜^‚µ’¼‚µ‚Ä‚­‚¾‚³‚¢B\n");
             }
             else{
             	*rootval = get_passval(str);
-            	printf("ç™»éŒ²ãŒå®Œäº†ã—ã¾ã—ãŸã€‚\n");
+            	printf("“o˜^‚ªŠ®—¹‚µ‚Ü‚µ‚½B\n");
             	num = 0;
             }
         }
@@ -117,26 +117,26 @@ int insert_DATA(node **DATA, int *rootval) {
 	char ex_tell[20], ex_mail[128];
     unsigned char ex_job[512];
     node *sample, *null_back;
-    char *prefecture[47] ={"åŒ—æµ·é“","é’æ£®çœŒ","å²©æ‰‹çœŒ","å®®åŸçœŒ","ç§‹ç”°çœŒ","å±±å½¢çœŒ","ç¦å³¶çœŒ",
-    "èŒ¨åŸçœŒ","æ ƒæœ¨çœŒ","ç¾¤é¦¬çœŒ","åŸ¼ç‰çœŒ","åƒè‘‰çœŒ","æ±äº¬éƒ½","ç¥å¥ˆå·çœŒ",
-    "æ–°æ½ŸçœŒ","å¯Œå±±çœŒ","çŸ³å·çœŒ","ç¦äº•çœŒ","å±±æ¢¨çœŒ","é•·é‡çœŒ","å²é˜œçœŒ",
-    "é™å²¡çœŒ","æ„›çŸ¥çœŒ","ä¸‰é‡çœŒ","æ»‹è³€çœŒ","äº¬éƒ½åºœ","å¤§é˜ªåºœ","å…µåº«çœŒ",
-    "å¥ˆè‰¯çœŒ","å’Œæ­Œå±±çœŒ","é³¥å–çœŒ","å³¶æ ¹çœŒ","å²¡å±±çœŒ","åºƒå³¶çœŒ","å±±å£çœŒ",
-    "å¾³å³¶çœŒ","é¦™å·çœŒ","æ„›åª›çœŒ","é«˜çŸ¥çœŒ","ç¦å²¡çœŒ","ä½è³€çœŒ","é•·å´çœŒ",
-    "ç†Šæœ¬çœŒ","å¤§åˆ†çœŒ","å®®å´çœŒ","é¹¿å…å³¶çœŒ","æ²–ç¸„çœŒ"
+    char *prefecture[47] ={"–kŠC“¹","ÂXŒ§","ŠâèŒ§","‹{éŒ§","H“cŒ§","RŒ`Œ§","•Ÿ“‡Œ§",
+    "ˆïéŒ§","“È–ØŒ§","ŒQ”nŒ§","é‹ÊŒ§","ç—tŒ§","“Œ‹“s","_“ŞìŒ§",
+    "VŠƒŒ§","•xRŒ§","ÎìŒ§","•ŸˆäŒ§","R—œŒ§","’·–ìŒ§","Šò•ŒŒ§",
+    "Ã‰ªŒ§","ˆ¤’mŒ§","OdŒ§"," ‰êŒ§","‹“s•{","‘åã•{","•ºŒÉŒ§",
+    "“Ş—ÇŒ§","˜a‰ÌRŒ§","’¹æŒ§","“‡ªŒ§","‰ªRŒ§","L“‡Œ§","RŒûŒ§",
+    "“¿“‡Œ§","ìŒ§","ˆ¤•QŒ§","‚’mŒ§","•Ÿ‰ªŒ§","²‰êŒ§","’·èŒ§",
+    "ŒF–{Œ§","‘å•ªŒ§","‹{èŒ§","­™“‡Œ§","‰«“êŒ§"
     };
 
-    FILE *fi = fopen("DATA.csv","r");
-    if(fgetc(fi) == EOF){ //ãƒ•ã‚¡ã‚¤ãƒ«ãŒç©ºãªã‚‰çµ‚ã‚ã‚Š
+    FILE *fi = fopen("DATA_windows.csv","r");
+    if(fgetc(fi) == EOF){ //ƒtƒ@ƒCƒ‹‚ª‹ó‚È‚çI‚í‚è
         char str_root[] = "root";
-        *rootval = get_passval(str_root); //ç®¡ç†è€…æ¨©é™ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’rootã«ã›ã£ã¦ã„
+        *rootval = get_passval(str_root); //ŠÇ—ÒŒ ŒÀ‚ÌƒpƒXƒ[ƒh‚ğroot‚É‚¹‚Á‚Ä‚¢
         return 1;
     }
     else fseek(fi, 0, SEEK_SET);
 
     fscanf(fi,"%d",rootval);
-    fgetc(fi);//æ”¹è¡Œèª­ã¿
-    if(fgetc(fi) == EOF){ //ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ãŒãªã‘ã‚Œã°çµ‚ã‚ã‚Š
+    fgetc(fi);//‰üs“Ç‚İ
+    if(fgetc(fi) == EOF){ //“o˜^ƒf[ƒ^‚ª‚È‚¯‚ê‚ÎI‚í‚è
         return 1;
     }
     else fseek(fi, -1, SEEK_CUR);
@@ -168,7 +168,7 @@ int insert_DATA(node **DATA, int *rootval) {
         strcpy(sample->mail, ex_mail);
         strcpy(sample->job, ex_job);
 
-        sample->prefecture = 48; //éƒ½é“åºœçœŒå‰²ã‚Šå½“ã¦(48ã¯ä½æ‰€ã«éƒ½é“åºœçœŒãŒç„¡ã‹ã£ãŸå ´åˆ)
+        sample->prefecture = 48; //“s“¹•{Œ§Š„‚è“–‚Ä(48‚ÍZŠ‚É“s“¹•{Œ§‚ª–³‚©‚Á‚½ê‡)
         for(i = 0; i < 47; i++){
             if(strstr(sample->address, prefecture[i]) != NULL) {
                 sample->prefecture = i+1;
@@ -176,18 +176,18 @@ int insert_DATA(node **DATA, int *rootval) {
             }
         }
 
-        num = get_hashval(ex_mail); //ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ãƒãƒƒã‚·ãƒ¥å€¤ã‚’ç”Ÿæˆ
-        if(DATA[num] == NULL) {//è¡çªãªã—
+        num = get_hashval(ex_mail); //ƒ[ƒ‹ƒAƒhƒŒƒX‚©‚çƒnƒbƒVƒ…’l‚ğ¶¬
+        if(DATA[num] == NULL) {//Õ“Ë‚È‚µ
             DATA[num] = sample;
         }
-        else{//è¡çªæœ‰ã‚Š
-            null_back = DATA[num];//NULLã‚’è¦‹ã¤ã‘ã‚‹ãƒã‚¤ãƒ³ã‚¿
-            while(null_back->next != NULL){ //NULLãŒè¦‹ã¤ã‹ã‚‹ã¾ã§ç·šå½¢ãƒªã‚¹ãƒˆã‚’èµ°æŸ»
+        else{//Õ“Ë—L‚è
+            null_back = DATA[num];//NULL‚ğŒ©‚Â‚¯‚éƒ|ƒCƒ“ƒ^
+            while(null_back->next != NULL){ //NULL‚ªŒ©‚Â‚©‚é‚Ü‚ÅüŒ`ƒŠƒXƒg‚ğ‘–¸
                 null_back = null_back->next;
             }
-            null_back->next = sample;//NULLã ã£ãŸãƒã‚¤ãƒ³ã‚¿ã®æ‰‹å‰ã®next(ã¤ã¾ã‚ŠNULL)ã«ä»£å…¥
+            null_back->next = sample;//NULL‚¾‚Á‚½ƒ|ƒCƒ“ƒ^‚Ìè‘O‚Ìnext(‚Â‚Ü‚èNULL)‚É‘ã“ü
         }
-        if (fgetc(fi) == EOF) break;//ãƒ•ã‚¡ã‚¤ãƒ«ã®çµ‚ã‚ã‚Šã§çµ‚äº†
+        if (fgetc(fi) == EOF) break;//ƒtƒ@ƒCƒ‹‚ÌI‚í‚è‚ÅI—¹
     }
     fclose(fi);
 }
@@ -197,11 +197,11 @@ int push_file(node **DATA, int rootval){
     node *chain;
     FILE *fo = fopen("DATA.csv","w");
     char str[] = "root";
-    fprintf(fo,"%d",rootval); //ç®¡ç†è€…æ¨©é™ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+    fprintf(fo,"%d",rootval); //ŠÇ—ÒŒ ŒÀ‚ÌƒpƒXƒ[ƒh
     for(i = 0; i < bucket_size; i++){
         if(DATA[i] != NULL){
             chain = DATA[i];
-            // ãƒªã‚¹ãƒˆå†…éƒ¨ã‚’èµ°æŸ»ã—ã¦å‡ºåŠ›ã™ã‚‹
+            // ƒŠƒXƒg“à•”‚ğ‘–¸‚µ‚Äo—Í‚·‚é
             while(chain != NULL){
                 fprintf(fo,"\n");
                 fprintf(fo,"%s,%s,%s,%s,%s,%d,%s,%s,%s,%d,%d,%d,%s,%d,%d",
@@ -226,23 +226,23 @@ int resister_DATA(node** DATA){
     node *sample, *null_back;
     
     while(1){
-    	printf("ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
-    	printf("[åå‰ã‚’å…¥åŠ›]\n");
-    	printf("å§“(ã‚«ãƒŠ):");				scanf("%s",ex_name_ruby[0]);
-    	printf("å(ã‚«ãƒŠ):");				scanf("%s",ex_name_ruby[1]);
-    	printf("å§“(æ¼¢å­—):");				scanf("%s",ex_name[0]);
-    	printf("å(æ¼¢å­—):");				scanf("%s",ex_name[1]);
-    	printf("ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ :");			scanf("%s",ex_nickname);
-    	printf("éƒµä¾¿ç•ªå·ã‚’å…¥åŠ›:");		scanf("%d",&ex_postal);
-    	printf("ä½æ‰€:");					scanf("%s",ex_address);
-    	printf("é›»è©±ç•ªå·:");    			scanf("%s",ex_tell);
-    	printf("ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹:");	    scanf("%s",ex_mail);
-    	printf("[ç”Ÿå¹´æœˆæ—¥ã‚’å…¥åŠ›]\n");
-    	printf("è¥¿æš¦:");			    	scanf("%d",&ex_born[0]);
-    	printf("èª•ç”Ÿæœˆ:");    			scanf("%d",&ex_born[1]);
-    	printf("èª•ç”Ÿæ—¥:");		    	scanf("%d",&ex_born[2]);
-    	printf("è·æ¥­:");	    			scanf("%s",ex_job);
-    	printf("æ€§åˆ¥(ç”·æ€§=0, å¥³æ€§=1, ãã®ä»–=2):");	scanf("%d",&ex_sex);
+    	printf("“o˜^ƒf[ƒ^‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
+    	printf("[–¼‘O‚ğ“ü—Í]\n");
+    	printf("©(ƒJƒi):");				scanf("%s",ex_name_ruby[0]);
+    	printf("–¼(ƒJƒi):");				scanf("%s",ex_name_ruby[1]);
+    	printf("©(Š¿š):");				scanf("%s",ex_name[0]);
+    	printf("–¼(Š¿š):");				scanf("%s",ex_name[1]);
+    	printf("ƒjƒbƒNƒl[ƒ€:");			scanf("%s",ex_nickname);
+    	printf("—X•Ö”Ô†‚ğ“ü—Í:");		scanf("%d",&ex_postal);
+    	printf("ZŠ:");					scanf("%s",ex_address);
+    	printf("“d˜b”Ô†:");    			scanf("%s",ex_tell);
+    	printf("ƒ[ƒ‹ƒAƒhƒŒƒX:");	    scanf("%s",ex_mail);
+    	printf("[¶”NŒ“ú‚ğ“ü—Í]\n");
+    	printf("¼—ï:");			    	scanf("%d",&ex_born[0]);
+    	printf("’a¶Œ:");    			scanf("%d",&ex_born[1]);
+    	printf("’a¶“ú:");		    	scanf("%d",&ex_born[2]);
+    	printf("E‹Æ:");	    			scanf("%s",ex_job);
+    	printf("«•Ê(’j«=0, —«=1, ‚»‚Ì‘¼=2):");	scanf("%d",&ex_sex);
     	
         sample = (node *)malloc(sizeof(node));
 		
@@ -272,43 +272,43 @@ int resister_DATA(node** DATA){
         strcpy(sample->mail, ex_mail);
         strcpy(sample->job, ex_job);
 
-		num = get_hashval(ex_mail); //ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ãƒãƒƒã‚·ãƒ¥å€¤ã‚’ç”Ÿæˆ
+		num = get_hashval(ex_mail); //ƒ[ƒ‹ƒAƒhƒŒƒX‚©‚çƒnƒbƒVƒ…’l‚ğ¶¬
         //printf("%d\n",num);
-        if(DATA[num] == NULL) {//è¡çªãªã—
+        if(DATA[num] == NULL) {//Õ“Ë‚È‚µ
             DATA[num] = sample;
         }
-        else{//è¡çªæœ‰ã‚Š
-            null_back = DATA[num];//NULLã‚’è¦‹ã¤ã‘ã‚‹ãƒã‚¤ãƒ³ã‚¿
-            while(null_back->next != NULL){ //NULLãŒè¦‹ã¤ã‹ã‚‹ã¾ã§ç·šå½¢ãƒªã‚¹ãƒˆã‚’èµ°æŸ»
+        else{//Õ“Ë—L‚è
+            null_back = DATA[num];//NULL‚ğŒ©‚Â‚¯‚éƒ|ƒCƒ“ƒ^
+            while(null_back->next != NULL){ //NULL‚ªŒ©‚Â‚©‚é‚Ü‚ÅüŒ`ƒŠƒXƒg‚ğ‘–¸
                 null_back = null_back->next;
             }
-            null_back->next = sample;//NULLã ã£ãŸãƒã‚¤ãƒ³ã‚¿ã®æ‰‹å‰ã®next(ã¤ã¾ã‚ŠNULL)ã«ä»£å…¥
+            null_back->next = sample;//NULL‚¾‚Á‚½ƒ|ƒCƒ“ƒ^‚Ìè‘O‚Ìnext(‚Â‚Ü‚èNULL)‚É‘ã“ü
         }
         
-        printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ç™»éŒ²ã—ã¾ã™ã‹ï¼Ÿ");
-		printf("1ï¼šã¯ã„ã€€0ï¼šã„ã„ãˆ\n");
+        printf("ƒpƒXƒ[ƒh‚ğ“o˜^‚µ‚Ü‚·‚©H");
+		printf("1F‚Í‚¢@0F‚¢‚¢‚¦\n");
 		scanf("%d",&num);
 		if(num == 1){
-			printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚(4å­—ä»¥ä¸Š)\n");
+			printf("ƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B(4šˆÈã)\n");
 			scanf("%s",str);
 			while(strlen(str) < 4){
-			printf("4å­—ä»¥ä¸Šã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
+			printf("4šˆÈã‚Å‚Í‚ ‚è‚Ü‚¹‚ñB‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
 			scanf("%s",str);
 			}
-			printf("ç¢ºèªã®ãŸã‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
+			printf("Šm”F‚Ì‚½‚ß‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
 			scanf("%s",str2);
 			while(strcmp(str,str2)!=0){
-				printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã„ã¾ã™ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
+				printf("ƒpƒXƒ[ƒh‚ªˆá‚¢‚Ü‚·B‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
 				scanf("%s",str);
-				printf("ç¢ºèªã®ãŸã‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
+				printf("Šm”F‚Ì‚½‚ß‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
 				scanf("%s",str2);
 			}
-		    printf("ç™»éŒ²ãŒå®Œäº†ã—ã¾ã—ãŸã€‚\n");
+		    printf("“o˜^‚ªŠ®—¹‚µ‚Ü‚µ‚½B\n");
 		}
 		
 		printf("%s %s %s %s %s %d %s %s %s %d %d %d %s %d\n",ex_name_ruby[0],ex_name_ruby[1],ex_name[0],ex_name[1],ex_nickname,ex_postal,ex_address,ex_tell,ex_mail,ex_born[0],ex_born[1],ex_born[2],ex_job,ex_sex);
 		
-	    printf("ä½æ‰€ç™»éŒ²ã‚’ç¶šè¡Œã—ã¾ã™ã‹ï¼Ÿ	Yes=1:  No=2:  (å…¥åŠ›)ï¼š");
+	    printf("ZŠ“o˜^‚ğ‘±s‚µ‚Ü‚·‚©H	Yes=1:  No=2:  (“ü—Í)F");
 	    scanf("%d",&i);
 	    if(i==2){
 		    break;
@@ -325,196 +325,196 @@ int change_DATA(node **DATA,int root){
     int ex_postal,ex_tell,ex_born,ex_sex;
 	unsigned char str[500],str2[500];
 	node *sample;
-    char *name[3] = {"ç”·æ€§","å¥³æ€§","ãã®ä»–ã®æ€§åˆ¥"};
+    char *name[3] = {"’j«","—«","‚»‚Ì‘¼‚Ì«•Ê"};
 
     while(1){
-    	printf("å†…å®¹ã‚’å¤‰æ›´ã—ãŸã„ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ (çµ‚äº†=0)\n");
+    	printf("“à—e‚ğ•ÏX‚µ‚½‚¢ƒ†[ƒU[‚Ìƒ[ƒ‹ƒAƒhƒŒƒX‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢ (I—¹=0)\n");
         scanf( "%s", str);
         if(strcmp(str,"0") == 0) {
-            printf("çµ‚äº†ã—ã¾ã™ã€‚\n");
+            printf("I—¹‚µ‚Ü‚·B\n");
             break;
         }
         val = get_hashval(str);
         sample = DATA[val];
         if (sample == NULL) {
-            printf("ãã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚\n");
+            printf("‚»‚Ìƒ[ƒ‹ƒAƒhƒŒƒX‚Í“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB\n");
             continue;
         }
         else {
             while (strcmp(str, sample->mail) != 0) {
                 sample = sample->next;
                 if (sample == NULL) {
-                    printf("ãã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚\n");
+                    printf("‚»‚Ìƒ[ƒ‹ƒAƒhƒŒƒX‚Í“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB\n");
                     break;
                 }
             }
             if(sample == NULL) continue;
     	}
-    	 if(root == 0 && sample->passval != 0){ //ç®¡ç†è€…æ¨©é™ã§ã¯ãªãã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒã‚ã‚‹
-            printf("ç®¡ç†è€…æ¨©é™ãŒãªã„ãŸã‚ã€ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ï¼ˆã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„=0ï¼‰\n");
+    	 if(root == 0 && sample->passval != 0){ //ŠÇ—ÒŒ ŒÀ‚Å‚Í‚È‚­AƒpƒXƒ[ƒh‚ª‚ ‚é
+            printf("ŠÇ—ÒŒ ŒÀ‚ª‚È‚¢‚½‚ßA“o˜^‚³‚ê‚Ä‚¢‚éƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢BiƒAƒNƒZƒX‚µ‚È‚¢=0j\n");
             scanf("%s",str);
             while(strcmp(str,"0") != 0 && get_passval(str) != sample->passval){
-                printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã„ã¾ã™ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ï¼ˆã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„=0ï¼‰\n");
+                printf("ƒpƒXƒ[ƒh‚ªˆá‚¢‚Ü‚·B‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢BiƒAƒNƒZƒX‚µ‚È‚¢=0j\n");
                 scanf("%s",str);
             }
             if(strcmp(str,"0") == 0) {
-                printf("ä¸­æ­¢ã—ã¾ã—ãŸã€‚\n");
+                printf("’†~‚µ‚Ü‚µ‚½B\n");
                 continue;
             }
-            printf("ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã—ãŸ\n");
+            printf("ƒAƒNƒZƒX‚Å‚«‚Ü‚µ‚½\n");
     	}
 
         while(1){
-        	printf("\nå¤‰æ›´ã—ãŸã„å†…å®¹ã®ç•ªå·ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„\n");
-        	printf("å§“åã€€ã€€ã€€ã€€ã€€ï¼š1\n");
-        	printf("å‘¼ã³åã€€ã€€ã€€ã€€ï¼š2\n");
-        	printf("éƒµä¾¿ç•ªå·ã€€ã€€ã€€ï¼š3\n");
-        	printf("ä½æ‰€ã€€ã€€ã€€ã€€ã€€ï¼š4\n");
-        	printf("é›»è©±ç•ªå·ã€€ã€€ã€€ï¼š5\n");
-        	printf("ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼š6\n");
-        	printf("ç”Ÿå¹´æœˆæ—¥ã€€ã€€ã€€ï¼š7\n");
-        	printf("è·æ¥­ã€€ã€€ã€€ã€€ã€€ï¼š8\n");
-            printf("æ€§åˆ¥          ï¼š9\n");
-            printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰    ï¼š10\n");
-        	printf("çµ‚äº†          ï¼š0\n");
+        	printf("\n•ÏX‚µ‚½‚¢“à—e‚Ì”Ô†‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+        	printf("©–¼@@@@@F1\n");
+        	printf("ŒÄ‚Ñ–¼@@@@F2\n");
+        	printf("—X•Ö”Ô†@@@F3\n");
+        	printf("ZŠ@@@@@F4\n");
+        	printf("“d˜b”Ô†@@@F5\n");
+        	printf("ƒ[ƒ‹ƒAƒhƒŒƒXF6\n");
+        	printf("¶”NŒ“ú@@@F7\n");
+        	printf("E‹Æ@@@@@F8\n");
+            printf("«•Ê          F9\n");
+            printf("ƒpƒXƒ[ƒh    F10\n");
+        	printf("I—¹          F0\n");
             scanf("%d",&sw);
             if(sw==0)break;
 
         	switch(sw){
                 case 1: 
-                    printf("\nç¾åœ¨ã®å§“åï¼š%s %s\n",sample->name[0],sample->name[1]);
-        			printf("\nå¤‰æ›´å¾Œã®å§“ï¼š");
+                    printf("\nŒ»İ‚Ì©–¼F%s %s\n",sample->name[0],sample->name[1]);
+        			printf("\n•ÏXŒã‚Ì©F");
         			scanf("%s",str);
-        			sample->name[0]=(char*)realloc(sample->name[0],sizeof(char)*(strlen(str)+1));//å¢—ã‚„ã—ãŸã‚Šæ¸›ã‚‰ã—ãŸã‚Š
+        			sample->name[0]=(char*)realloc(sample->name[0],sizeof(char)*(strlen(str)+1));//‘‚â‚µ‚½‚èŒ¸‚ç‚µ‚½‚è
         			strcpy(sample->name[0],str);
             
-        			printf("ãƒ•ãƒªã‚¬ãƒŠï¼š");
+        			printf("ƒtƒŠƒKƒiF");
         			scanf("%s",str);
         			sample->name_ruby[0]=(char*)realloc(sample->name_ruby[0],sizeof(char)*(strlen(str)+1));
         			strcpy(sample->name_ruby[0],str);
             
-        			printf("\nå¤‰æ›´å¾Œã®åï¼š");
+        			printf("\n•ÏXŒã‚Ì–¼F");
         			scanf("%s",str);
         			sample->name[1]=(char*)realloc(sample->name[1],sizeof(char)*(strlen(str)+1));
         			strcpy(sample->name[1],str);
             
-        			printf("ãƒ•ãƒªã‚¬ãƒŠï¼š");
+        			printf("ƒtƒŠƒKƒiF");
         			scanf("%s",str);
         			sample->name_ruby[1]=(char*)realloc(sample->name_ruby[1],sizeof(char)*(strlen(str)+1));
         			strcpy(sample->name_ruby[1],str);
             
-        			printf("\nå§“åãŒ %s %s ( %s %s )ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->name[0],sample->name[1]
+        			printf("\n©–¼‚ª %s %s ( %s %s )‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->name[0],sample->name[1]
         																				,sample->name_ruby[0],sample->name_ruby[1]);
         			break;
             
                 case 2: 
-                    printf("\nç¾åœ¨ã®å‘¼ã³åï¼š%s\n",sample->nickname);
-        			printf("å¤‰æ›´å¾Œã®å‘¼ã³åï¼š");
+                    printf("\nŒ»İ‚ÌŒÄ‚Ñ–¼F%s\n",sample->nickname);
+        			printf("•ÏXŒã‚ÌŒÄ‚Ñ–¼F");
         			scanf("%s",str);
         			sample->nickname=(char*)realloc(sample->nickname,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->nickname,str);
-        			printf("\nå‘¼ã³åãŒ %s ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->nickname);
+        			printf("\nŒÄ‚Ñ–¼‚ª %s ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->nickname);
         			break;
             
                 case 3: 
-                    printf("\nç¾åœ¨ã®éƒµä¾¿ç•ªå·ï¼š%d\n",sample->postal);
-        			printf("å¤‰æ›´å¾Œã®éƒµä¾¿ç•ªå·ï¼š");
+                    printf("\nŒ»İ‚Ì—X•Ö”Ô†F%d\n",sample->postal);
+        			printf("•ÏXŒã‚Ì—X•Ö”Ô†F");
         			scanf("%d",&ex_postal);
         			sample->postal = ex_postal;
-        			printf("\néƒµä¾¿ç•ªå·ãŒ %d ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->postal);
+        			printf("\n—X•Ö”Ô†‚ª %d ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->postal);
         			break;
             
                 case 4: 
-                    printf("\nç¾åœ¨ã®ä½æ‰€ï¼š%s\n",sample->address);
-        			printf("å¤‰æ›´å¾Œã®ä½æ‰€ï¼š");
+                    printf("\nŒ»İ‚ÌZŠF%s\n",sample->address);
+        			printf("•ÏXŒã‚ÌZŠF");
         			scanf("%s",str);
         			sample->address=(char*)realloc(sample->address,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->address,str);
-        			printf("\nä½æ‰€ãŒ %s ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->address);
+        			printf("\nZŠ‚ª %s ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->address);
         			break;
             
                 case 5: 
-                    printf("\nç¾åœ¨ã®é›»è©±ç•ªå·ï¼š%s\n",sample->tell);
-        			printf("å¤‰æ›´å¾Œã®é›»è©±ç•ªå·ï¼š");
+                    printf("\nŒ»İ‚Ì“d˜b”Ô†F%s\n",sample->tell);
+        			printf("•ÏXŒã‚Ì“d˜b”Ô†F");
         			scanf("%s",str);
         			sample->tell=(char*)realloc(sample->tell,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->tell,str);
-        			printf("\né›»è©±ç•ªå·ãŒ %s ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->tell);
+        			printf("\n“d˜b”Ô†‚ª %s ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->tell);
         			break;
             
                 case 6: 
-                    printf("\nç¾åœ¨ã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼š%s\n",sample->mail);
-        			printf("å¤‰æ›´å¾Œã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼š");
+                    printf("\nŒ»İ‚Ìƒ[ƒ‹ƒAƒhƒŒƒXF%s\n",sample->mail);
+        			printf("•ÏXŒã‚Ìƒ[ƒ‹ƒAƒhƒŒƒXF");
         			scanf("%s",str);
         			sample->mail=(char*)realloc(sample->mail,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->mail,str);
-        			printf("\nãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒ %s ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->mail);
+        			printf("\nƒ[ƒ‹ƒAƒhƒŒƒX‚ª %s ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->mail);
         			break;
             
                 case 7: 
-                    printf("\nç¾åœ¨ã®ç”Ÿå¹´æœˆæ—¥ï¼š%då¹´ %dæœˆ %dæ—¥\n",sample->born[0],sample->born[1],sample->born[2]);
-        			printf("\nå¤‰æ›´å¾Œã®è¥¿æš¦ï¼š");
+                    printf("\nŒ»İ‚Ì¶”NŒ“úF%d”N %dŒ %d“ú\n",sample->born[0],sample->born[1],sample->born[2]);
+        			printf("\n•ÏXŒã‚Ì¼—ïF");
         			scanf("%d",&ex_born);
         			sample->born[0]=ex_born;
             
-        			printf("\nå¤‰æ›´å¾Œã®æœˆï¼š");
+        			printf("\n•ÏXŒã‚ÌŒF");
         			scanf("%d",&ex_born);
         			sample->born[1]=ex_born;
             
-        			printf("\nå¤‰æ›´å¾Œã®æ—¥ï¼š");
+        			printf("\n•ÏXŒã‚Ì“úF");
         			scanf("%d",&ex_born);
         			sample->born[2]=ex_born;
-        			printf("\nç”Ÿå¹´æœˆæ—¥ãŒ %då¹´ %dæœˆ %dæ—¥ ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->born[0],sample->born[1],sample->born[2]); 
+        			printf("\n¶”NŒ“ú‚ª %d”N %dŒ %d“ú ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->born[0],sample->born[1],sample->born[2]); 
         			break;
             
                 case 8:
-                    printf("\nç¾åœ¨ã®è·æ¥­ï¼š%s\n",sample->job);
-        			printf("å¤‰æ›´å¾Œã®è·æ¥­ï¼š");
+                    printf("\nŒ»İ‚ÌE‹ÆF%s\n",sample->job);
+        			printf("•ÏXŒã‚ÌE‹ÆF");
         			scanf("%s",str);
         			sample->job=(char*)realloc(sample->job,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->job,str);
-        			printf("\nè·æ¥­ãŒ %s ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",sample->job);
+        			printf("\nE‹Æ‚ª %s ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",sample->job);
         			break;
             
                 case 9: 
-                    printf("\nç¾åœ¨ã®æ€§åˆ¥ï¼š%s\n",name[sample->sex]);
-        			printf("å¤‰æ›´å¾Œã®æ€§åˆ¥(ç”·æ€§=0, å¥³æ€§=1, ãã®ä»–ã®æ€§åˆ¥=2)ï¼š");
+                    printf("\nŒ»İ‚Ì«•ÊF%s\n",name[sample->sex]);
+        			printf("•ÏXŒã‚Ì«•Ê(’j«=0, —«=1, ‚»‚Ì‘¼‚Ì«•Ê=2)F");
         			scanf("%d",&ex_sex);
         			sample->sex=ex_sex;
-        			printf("\næ€§åˆ¥ãŒ %s ã«å¤‰æ›´ã•ã‚Œã¾ã—ãŸ\n",name[sample->sex]);
+        			printf("\n«•Ê‚ª %s ‚É•ÏX‚³‚ê‚Ü‚µ‚½\n",name[sample->sex]);
                     break;
                 case 10:
                     if(sample->passval == 0){
-                        printf("\næ–°è¦ç™»éŒ²ã«ãªã‚Šã¾ã™\n");
+                        printf("\nV‹K“o˜^‚É‚È‚è‚Ü‚·\n");
                     }
                     else if(root == 0){
-                        printf("\nç¾åœ¨ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„\n");
+                        printf("\nŒ»İ‚ÌƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
                         scanf("%s",str);
                         while(strcmp(str,"0") != 0 && get_passval(str) != sample->passval){
-                            printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã„ã¾ã™ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ï¼ˆã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„=0ï¼‰\n");
+                            printf("ƒpƒXƒ[ƒh‚ªˆá‚¢‚Ü‚·B‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢BiƒAƒNƒZƒX‚µ‚È‚¢=0j\n");
                             scanf("%s",str);
                         }
                         if(strcmp(str,"0") == 0) {
-                            printf("ä¸­æ­¢ã—ã¾ã—ãŸã€‚\n");
+                            printf("’†~‚µ‚Ü‚µ‚½B\n");
                             continue;
                         }
                     }
                     while(1){
-                        printf("ç™»éŒ²ã™ã‚‹ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰(4æ–‡å­—ä»¥ä¸Š)ï¼š");
+                        printf("“o˜^‚·‚éƒpƒXƒ[ƒh(4•¶šˆÈã)F");
                         scanf("%s",str);
                         while(strlen(str) < 4){
-                            printf("\n4å­—ä»¥ä¸Šã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
+                            printf("\n4šˆÈã‚Å‚Í‚ ‚è‚Ü‚¹‚ñB‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
                             scanf("%s",str);
                         }
-                        printf("\nç¢ºèªã®ãŸã‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„\n");
+                        printf("\nŠm”F‚Ì‚½‚ß‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
                         scanf("%s",str2);
                         if(strcmp(str,str2)!=0){
-                            printf("\nãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã›ã‚“ã§ã—ãŸã€‚ç™»éŒ²ã—ç›´ã—ã¦ãã ã•ã„\n");//ç¹°ã‚Šè¿”ã—
+                            printf("\nƒpƒXƒ[ƒh‚ªˆê’v‚µ‚Ü‚¹‚ñ‚Å‚µ‚½B“o˜^‚µ’¼‚µ‚Ä‚­‚¾‚³‚¢\n");//ŒJ‚è•Ô‚µ
                             continue;
                         }
                         else{
                             sample->passval = get_passval(str);
-                            printf("\nç™»éŒ²ãŒå®Œäº†ã—ã¾ã—ãŸã€‚\n");
+                            printf("\n“o˜^‚ªŠ®—¹‚µ‚Ü‚µ‚½B\n");
                             break;
                         }
                     }
@@ -529,23 +529,23 @@ int delete_DATA(node **DATA, int root) {
     int val, handan, first;
     node *sample;
     node *back;
-    char *name[3] = {"ç”·æ€§","å¥³æ€§","ãã®ä»–ã®æ€§åˆ¥"};
+    char *name[3] = {"’j«","—«","‚»‚Ì‘¼‚Ì«•Ê"};
 
     while(1){
-        printf("å‰Šé™¤ã—ãŸã„ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ï¼ˆçµ‚äº†=0ï¼‰\n");
+        printf("íœ‚µ‚½‚¢ƒ†[ƒU[‚Ìƒ[ƒ‹ƒAƒhƒŒƒX‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢iI—¹=0j\n");
         scanf( "%s", mail);
         if(strcmp(mail,"0") == 0) {
-            printf("çµ‚äº†ã—ã¾ã™ã€‚\n");
+            printf("I—¹‚µ‚Ü‚·B\n");
             break;
         }
         val = get_hashval(mail);
         sample = DATA[val];
         if (sample == NULL) {
-            printf("ãã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚\n");
+            printf("‚»‚Ìƒ[ƒ‹ƒAƒhƒŒƒX‚Í“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB\n");
             continue;
         }
         else {
-            if (strcmp(mail, sample->mail) == 0) {//ç·šå½¢ãƒªã‚¹ãƒˆã®å…ˆé ­ã‚’æ¶ˆã—ãŸã„
+            if (strcmp(mail, sample->mail) == 0) {//üŒ`ƒŠƒXƒg‚Ìæ“ª‚ğÁ‚µ‚½‚¢
                 first = 1;
             }else{
                 first = 0;
@@ -553,60 +553,60 @@ int delete_DATA(node **DATA, int root) {
                     back = sample;
                     sample = sample->next;
                     if (sample == NULL) {
-                        printf("ãã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚\n");
+                        printf("‚»‚Ìƒ[ƒ‹ƒAƒhƒŒƒX‚Í“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB\n");
                         break;
                     }
                 }
-                if(sample == NULL) continue; //ã‚„ã‚Šç›´ã—
+                if(sample == NULL) continue; //‚â‚è’¼‚µ
             }
         }
-        if(root == 0 && sample->passval != 0){ //ç®¡ç†è€…æ¨©é™ã§ã¯ãªãã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒã‚ã‚‹
-            printf("ç®¡ç†è€…æ¨©é™ãŒãªã„ãŸã‚ã€ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ï¼ˆã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„=0ï¼‰\n");
+        if(root == 0 && sample->passval != 0){ //ŠÇ—ÒŒ ŒÀ‚Å‚Í‚È‚­AƒpƒXƒ[ƒh‚ª‚ ‚é
+            printf("ŠÇ—ÒŒ ŒÀ‚ª‚È‚¢‚½‚ßA“o˜^‚³‚ê‚Ä‚¢‚éƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢BiƒAƒNƒZƒX‚µ‚È‚¢=0j\n");
             scanf("%s",str);
             while(strcmp(str,"0") != 0 && get_passval(str) != sample->passval){
-                printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã„ã¾ã™ã€‚ã‚‚ã†1åº¦å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ï¼ˆã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„=0ï¼‰\n");
+                printf("ƒpƒXƒ[ƒh‚ªˆá‚¢‚Ü‚·B‚à‚¤1“x“ü—Í‚µ‚Ä‚­‚¾‚³‚¢BiƒAƒNƒZƒX‚µ‚È‚¢=0j\n");
                 scanf("%s",str);
             }
             if(strcmp(str,"0") == 0) {
-                printf("ä¸­æ­¢ã—ã¾ã—ãŸã€‚\n");
+                printf("’†~‚µ‚Ü‚µ‚½B\n");
                 continue;
             }
-            printf("ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã—ãŸ\n");
+            printf("ƒAƒNƒZƒX‚Å‚«‚Ü‚µ‚½\n");
         }
-        printf("%s %s %s %s %s %d %s %s %s %då¹´%dæœˆ%dæ—¥ %s %s\n",
+        printf("%s %s %s %s %s %d %s %s %s %d”N%dŒ%d“ú %s %s\n",
                sample->name_ruby[0], sample->name_ruby[1], sample->name[0], sample->name[1], sample->nickname, sample->postal,
                sample->address, sample->tell, sample->mail, sample->born[0], sample->born[1], sample->born[2], sample->job, name[sample->sex]);
-        printf("ä»¥ä¸Šã®æƒ…å ±ã‚’å‰Šé™¤ã—ã¦ã‚‚æœ¬å½“ã«ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼ŸYES=1,NO=0\n");
+        printf("ˆÈã‚Ìî•ñ‚ğíœ‚µ‚Ä‚à–{“–‚É‚æ‚ë‚µ‚¢‚Å‚·‚©HYES=1,NO=0\n");
         scanf("%d", &handan);
         if (handan == 0) {
-            printf("ä¸­æ­¢ã—ã¾ã—ãŸ\n");
+            printf("’†~‚µ‚Ü‚µ‚½\n");
             continue;
         }
         else if (handan == 1) {
-            printf("å¾Œæ‚”ã—ã¾ã›ã‚“ã­ï¼ŸYES=1,NO=0\n");
+            printf("Œã‰÷‚µ‚Ü‚¹‚ñ‚ËHYES=1,NO=0\n");
             scanf("%d", &handan);
             if (handan == 0) {
-                printf("ä¸­æ­¢ã—ã¾ã—ãŸ\n");
+                printf("’†~‚µ‚Ü‚µ‚½\n");
                 continue;
             }
             else if (handan == 1) {
-                if(first == 1){//å…ˆé ­ã‚’æ¶ˆã™
+                if(first == 1){//æ“ª‚ğÁ‚·
                     DATA[val] = sample->next;
                     free(sample);
                 }
-                else{//é–“ã‚’æ¶ˆã™
+                else{//ŠÔ‚ğÁ‚·
                     back->next = sample->next;
                     free(sample);
                 }
-                printf("å‰Šé™¤ã—ã¾ã—ãŸ\n");
+                printf("íœ‚µ‚Ü‚µ‚½\n");
             }
             else {
-                printf("å…¥åŠ›ã‚¨ãƒ©ãƒ¼ã§ã™\n");
+                printf("“ü—ÍƒGƒ‰[‚Å‚·\n");
                 continue;
             }
         }
         else {
-            printf("å…¥åŠ›ã‚¨ãƒ©ãƒ¼ã§ã™\n");
+            printf("“ü—ÍƒGƒ‰[‚Å‚·\n");
             continue;
         }
     }
@@ -617,79 +617,77 @@ int search_DATA(node **DATA, int root){
     char c[1000], str[1000];
     char chara;
     int born[3];
-    char *name[3] = {"ç”·æ€§","å¥³æ€§","ãã®ä»–ã®æ€§åˆ¥"};
+    char *name[3] = {"’j«","—«","‚»‚Ì‘¼‚Ì«•Ê"};
     node *sample, *chain;
-    node *keep;//å¾Œã§æˆ»ã™nextã®ãƒã‚¤ãƒ³ã‚¿
-    node *DATA_search = NULL;//æ¤œç´¢çµæœ
+    node *keep;//Œã‚Å–ß‚·next‚Ìƒ|ƒCƒ“ƒ^
+    node *DATA_search = NULL;//ŒŸõŒ‹‰Ê
     int nocount = 0;
 
-    int flag = 2;//ç¶™ç¶šæ¡ä»¶
+    int flag = 2;//Œp‘±ğŒ
 	for(;;){
 	    DATA_search = NULL;
-        printf("æ¤œç´¢å†…å®¹ã‚’é¸æŠ\n");
-        printf("0:çµ‚äº†\n");
-        printf("1:åå­—(å…¨è§’ã‚«ãƒŠ)\n");
-        printf("2:åå‰(å…¨è§’ã‚«ãƒŠ)\n");
-        printf("3:éƒµä¾¿ç•ªå·\n");
-        printf("4:ä½æ‰€\n");
-        printf("5:é›»è©±ç•ªå·\n");
-        printf("6:ç”Ÿå¹´æœˆæ—¥\n");
-        printf("7:ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹\n");
-        printf("â€»å®Œå…¨åˆè‡´ã®ã¿è¡¨ç¤ºã—ã¾ã™\n");
+        printf("ŒŸõ“à—e‚ğ‘I‘ğ\n");
+        printf("0:I—¹\n");
+        printf("1:–¼š(‘SŠpƒJƒi)\n");
+        printf("2:–¼‘O(‘SŠpƒJƒi)\n");
+        printf("3:—X•Ö”Ô†\n");
+        printf("4:ZŠ\n");
+        printf("5:“d˜b”Ô†\n");
+        printf("6:¶”NŒ“ú\n");
+        printf("7:ƒ[ƒ‹ƒAƒhƒŒƒX\n");
+        printf("¦Š®‘S‡’v‚Ì‚İ•\\¦‚µ‚Ü‚·\n");
         scanf("%d",&i);
         if(1 <= i && i <= 6){
             for(;;){
-                born[0] = 1;        //åˆæœŸåŒ–
-                p = 1;              //åˆæœŸåŒ–
-                strcpy(c,"\n");     //åˆæœŸåŒ–
-                DATA_search = NULL; //åˆæœŸåŒ–
+                born[0] = 1;        //‰Šú‰»
+                p = 1;              //‰Šú‰»
+                strcpy(c,"\n");     //‰Šú‰»
+                DATA_search = NULL; //‰Šú‰»
                 switch(i){
                     case 1:
-                        printf("åå­—ã‚’å…¥åŠ›(å…¨è§’ã‚«ãƒŠ)\n");
-                        printf("çµ‚äº†ã™ã‚‹å ´åˆã¯'end'ã¨å…¥åŠ›\n");
-                        scanf("%*c%*c%s",c);
-                        printf("%s",c);
+                        printf("–¼š‚ğ“ü—Í(‘SŠpƒJƒi)\n");
+                        printf("I—¹‚·‚éê‡‚Í'end'‚Æ“ü—Í\n");
+                        scanf("%s",c);
                         break;
                     case 2:
-                        printf("åå‰ã‚’å…¥åŠ›(å…¨è§’ã‚«ãƒŠ)\n");
-                        printf("çµ‚äº†ã™ã‚‹å ´åˆã¯'end'ã¨å…¥åŠ›\n");
+                        printf("–¼‘O‚ğ“ü—Í(‘SŠpƒJƒi)\n");
+                        printf("I—¹‚·‚éê‡‚Í'end'‚Æ“ü—Í\n");
                         scanf("%s\n",c);
                         break;
                     case 3:
-                        printf("éƒµä¾¿ç•ªå·ã‚’å…¥åŠ›\n");
-                        printf("çµ‚äº†ã™ã‚‹å ´åˆã¯0ã‚’å…¥åŠ›\n");
+                        printf("—X•Ö”Ô†‚ğ“ü—Í\n");
+                        printf("I—¹‚·‚éê‡‚Í0‚ğ“ü—Í\n");
                         scanf("%d",&p);
                         break;
                     case 4:
-                        printf("ä½æ‰€ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„\n");
-                        printf("çµ‚äº†ã™ã‚‹å ´åˆã¯'end'ã¨å…¥åŠ›\n");
+                        printf("ZŠ‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+                        printf("I—¹‚·‚éê‡‚Í'end'‚Æ“ü—Í\n");
                         scanf("%s",c);
                         break;
                     case 5:
-                        printf("é›»è©±ç•ªå·ã‚’å…¥åŠ›\n");
-                        printf("çµ‚äº†ã™ã‚‹å ´åˆã¯'end'ã¨å…¥åŠ›\n");
+                        printf("“d˜b”Ô†‚ğ“ü—Í\n");
+                        printf("I—¹‚·‚éê‡‚Í'end'‚Æ“ü—Í\n");
                         scanf("%s",c);
                         break;
                     case 6:
-                        printf("ç”Ÿå¹´æœˆæ—¥ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
-                        printf("çµ‚äº†ã™ã‚‹å ´åˆã¯'0'ã¨å…¥åŠ›\n");
-                        printf("å¹´:"); scanf("%d",&born[0]);
+                        printf("¶”NŒ“ú‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
+                        printf("I—¹‚·‚éê‡‚Í'0'‚Æ“ü—Í\n");
+                        printf("”N:"); scanf("%d",&born[0]);
                         if(born[0] == 0) break;
-                        printf("æœˆ:"); scanf("%d",&born[1]);
-                        printf("æ—¥:"); scanf("%d",&born[2]);
+                        printf("Œ:"); scanf("%d",&born[1]);
+                        printf("“ú:"); scanf("%d",&born[2]);
                         break;
                 }
                 if(p == 0) break;
                 else if(born[0] == 0) break;
                 else if(strcmp(c,"end") == 0) break;
-                //è©²å½“æ¢ç´¢
-                k = 0;//ãƒ’ãƒƒãƒˆå›æ•°
-                nocount = 0;//ç®¡ç†è€…æ¨©é™ãŒç„¡ãã€ã¯ã˜ã‹ã‚ŒãŸå›æ•°
+                //ŠY“–’Tõ
+                k = 0;//ƒqƒbƒg‰ñ”
+                nocount = 0;//ŠÇ—ÒŒ ŒÀ‚ª–³‚­A‚Í‚¶‚©‚ê‚½‰ñ”
                 for(j = 0; j < bucket_size; j++){
                     sample = DATA[j];
                     while(sample != NULL){
-
-                        switch(i){ //ä¸€è‡´ã®æ¤œæŸ»
+                        switch(i){ //ˆê’v‚ÌŒŸ¸
                             case 1:
                                 l = strcmp(c,sample->name_ruby[0]);
                                 break;
@@ -712,14 +710,14 @@ int search_DATA(node **DATA, int root){
                                 break;
                         }
 
-                        if(l == 0){//ä¸€è‡´ã—ãŸå ´åˆ
+                        if(l == 0){//ˆê’v‚µ‚½ê‡
                             k++;
                             if(root == 0 && sample->passval != 0){
                                 nocount++;
                             }
                             else if(DATA_search == NULL){
                                 DATA_search = sample;
-                                DATA_search->right = NULL; //åˆæœŸåŒ–
+                                DATA_search->right = NULL; //‰Šú‰»
                             }
                             else{
                                 chain = DATA_search;
@@ -727,62 +725,59 @@ int search_DATA(node **DATA, int root){
                                     chain = chain->right;
                                 }
                                 chain->right = sample;
-                                chain->right->right = NULL; //åˆæœŸåŒ–
+                                chain->right->right = NULL; //‰Šú‰»
                             }
                         }
                         sample = sample->next;
                     }
                 }
                 
-
-                //æ¤œç´¢çµæœè¡¨ç¤º
+                //ŒŸõŒ‹‰Ê•\\¦
                 if(k == 0){
-                    printf("è©²å½“ã™ã‚‹åç°¿ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ\n");
+                    printf("ŠY“–‚·‚é–¼•ë‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½\n");
                 }
                 else if(k == 1){
-                    printf("è©²å½“ã™ã‚‹åç°¿ãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸ\n");
+                    printf("ŠY“–‚·‚é–¼•ë‚ªŒ©‚Â‚©‚è‚Ü‚µ‚½\n");
                     if(nocount == 0){
                         chain = DATA_search;
-                        printf("%s %s %s %s %s %d %s %s %s %då¹´%dæœˆ%dæ—¥ %s %s\n",
+                        printf("%s %s %s %s %s %d %s %s %s %d”N%dŒ%d“ú %s %s\n",
                                 chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                                 chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
-                        DATA_search->next = keep;//æˆ»ã™
-                        DATA_search = NULL;//å†åˆ©ç”¨ã™ã‚‹ãŸã‚åˆæœŸåŒ–
                     }
                     else{
-                        printf("ç®¡ç†è€…æ¨©é™ãŒãªã„ãŸã‚ã€%dä»¶ã®ãƒ‡ãƒ¼ã‚¿ã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã«ã‚ˆã‚Šè¡¨ç¤ºã§ãã¾ã›ã‚“ã§ã—ãŸã€‚\n",nocount);
+                        printf("ŠÇ—ÒŒ ŒÀ‚ª‚È‚¢‚½‚ßA%dŒ‚Ìƒf[ƒ^‚ÍƒpƒXƒ[ƒh‚É‚æ‚è•\\¦‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B\n",nocount);
                     }
                 }
                 else if(k > 1){
-                    printf("è©²å½“ã™ã‚‹åç°¿ãŒ%dä»¶è¦‹ã¤ã‹ã‚Šã¾ã—ãŸ\n",k);
-                    printf("ä¸€æ‹¬ã§è¡¨ç¤ºã—ã¾ã™\n");
-                    /* ãƒªã‚¹ãƒˆå†…éƒ¨ã‚’èµ°æŸ»ã—ã¦å‡ºåŠ›ã™ã‚‹ */
+                    printf("ŠY“–‚·‚é–¼•ë‚ª%dŒŒ©‚Â‚©‚è‚Ü‚µ‚½\n",k);
+                    printf("ˆêŠ‡‚Å•\\¦‚µ‚Ü‚·\n");
+                    /* ƒŠƒXƒg“à•”‚ğ‘–¸‚µ‚Äo—Í‚·‚é */
                     chain = DATA_search;
                     while(chain != NULL){
-                        printf("%s %s %s %s %s %d %s %s %s %då¹´%dæœˆ%dæ—¥ %s %s\n",
+                        printf("%s %s %s %s %s %d %s %s %s %d”N%dŒ%d“ú %s %s\n",
                         chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                         chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
                         chain = chain->right;
                     }
                     if(nocount != 0){
-                        printf("ç®¡ç†è€…æ¨©é™ãŒãªã„ãŸã‚ã€%dä»¶ã®ãƒ‡ãƒ¼ã‚¿ã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã«ã‚ˆã‚Šè¡¨ç¤ºã§ãã¾ã›ã‚“ã§ã—ãŸã€‚\n",nocount);
+                        printf("ŠÇ—ÒŒ ŒÀ‚ª‚È‚¢‚½‚ßA%dŒ‚Ìƒf[ƒ^‚ÍƒpƒXƒ[ƒh‚É‚æ‚è•\\¦‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B\n",nocount);
                     }
                 }else{
-                    printf("ã‚¨ãƒ©ãƒ¼\n");
-                    printf("æ¤œç´¢ã‚’ä¸­æ–­ã—é¸æŠç”»é¢ã¸ç§»å‹•ã—ã¾ã™\n");
+                    printf("ƒGƒ‰[\n");
+                    printf("ŒŸõ‚ğ’†’f‚µ‘I‘ğ‰æ–Ê‚ÖˆÚ“®‚µ‚Ü‚·\n");
                 }
             }
         }
         else if(i == 7){
             for(;;){
-                printf("ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å…¥åŠ›\n");
-                printf("çµ‚äº†ã™ã‚‹å ´åˆã¯'end'ã¨å…¥åŠ›\n");
+                printf("ƒ[ƒ‹ƒAƒhƒŒƒX‚ğ“ü—Í\n");
+                printf("I—¹‚·‚éê‡‚Í'end'‚Æ“ü—Í\n");
                 scanf("%s",c);
                 if(strcmp(c,"end")==0) break;
                 j = get_hashval(c);
                 if(DATA[j] == NULL){
-                    printf("è©²å½“ã™ã‚‹ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ\n");
-                    printf("æ¤œç´¢ã‚’ä¸­æ­¢ã—é¸æŠç”»é¢ã¸ç§»å‹•ã—ã¾ã™\n");
+                    printf("ŠY“–‚·‚éƒ[ƒ‹ƒAƒhƒŒƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½\n");
+                    printf("ŒŸõ‚ğ’†~‚µ‘I‘ğ‰æ–Ê‚ÖˆÚ“®‚µ‚Ü‚·\n");
                     break;
                 }
                 else{
@@ -792,25 +787,25 @@ int search_DATA(node **DATA, int root){
                         chain = chain->next;
                     }
                     if(chain == NULL){
-                        printf("è©²å½“ã™ã‚‹ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ\n");
-                        printf("æ¤œç´¢ã‚’ä¸­æ­¢ã—é¸æŠç”»é¢ã¸ç§»å‹•ã—ã¾ã™\n");
+                        printf("ŠY“–‚·‚éƒ[ƒ‹ƒAƒhƒŒƒX‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½\n");
+                        printf("ŒŸõ‚ğ’†~‚µ‘I‘ğ‰æ–Ê‚ÖˆÚ“®‚µ‚Ü‚·\n");
                         break;
                     }
-                    printf("è©²å½“ã™ã‚‹åç°¿ãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸ\n");
-                    if(root == 0 && chain->passval != 0){ //ç®¡ç†è€…æ¨©é™ã§ã¯ãªãã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒã‚ã‚‹
-                        printf("ç®¡ç†è€…æ¨©é™ãŒãªã„ãŸã‚ã€ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚ï¼ˆã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„=0ï¼‰\n");
+                    printf("ŠY“–‚·‚é–¼•ë‚ªŒ©‚Â‚©‚è‚Ü‚µ‚½\n");
+                    if(root == 0 && chain->passval != 0){ //ŠÇ—ÒŒ ŒÀ‚Å‚Í‚È‚­AƒpƒXƒ[ƒh‚ª‚ ‚é
+                        printf("ŠÇ—ÒŒ ŒÀ‚ª‚È‚¢‚½‚ßA“o˜^‚³‚ê‚Ä‚¢‚éƒpƒXƒ[ƒh‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢BiƒAƒNƒZƒX‚µ‚È‚¢=0j\n");
                         scanf("%s",str);
                         while(strcmp(str,"0") != 0 && get_passval(str) != chain->passval){
-                            printf("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã„ã¾ã™ã€‚å…¥åŠ›ã—ç›´ã—ã¦ãã ã•ã„ã€‚ï¼ˆã‚¢ã‚¯ã‚»ã‚¹ã—ãªã„=0ï¼‰\n");
+                            printf("ƒpƒXƒ[ƒh‚ªˆá‚¢‚Ü‚·B“ü—Í‚µ’¼‚µ‚Ä‚­‚¾‚³‚¢BiƒAƒNƒZƒX‚µ‚È‚¢=0j\n");
                             scanf("%s",str);
                         }
                         if(strcmp(str,"0") == 0) {
-                            printf("ä¸­æ­¢ã—ã¾ã—ãŸ\n");
+                            printf("’†~‚µ‚Ü‚µ‚½\n");
                             break;
                         }
-                        printf("ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã—ãŸ\n");
+                        printf("ƒAƒNƒZƒX‚Å‚«‚Ü‚µ‚½\n");
                     }
-                    printf("%s %s %s %s %s %d %s %s %s %då¹´%dæœˆ%dæ—¥ %s %s\n",
+                    printf("%s %s %s %s %s %d %s %s %s %d”N%dŒ%d“ú %s %s\n",
                     chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                     chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
                     chain = chain->next;
@@ -818,29 +813,29 @@ int search_DATA(node **DATA, int root){
             }
         }
         else if(i == 0){
-            printf("åç°¿æ¤œç´¢ã‚’çµ‚äº†ã—ã¾ã™ã‹?\n");
+            printf("–¼•ëŒŸõ‚ğI—¹‚µ‚Ü‚·‚©?\n");
             printf("yes:y or no:n\n");
             scanf("%*c%c",&chara);
             if(chara=='y') flag=0;
             else if(chara=='n') flag=2;
             else flag=1;
             if(flag==0){
-                printf("åç°¿æ¤œç´¢ã‚’çµ‚äº†ã—ã¾ã™\n");
+                printf("–¼•ëŒŸõ‚ğI—¹‚µ‚Ü‚·\n");
                 break;
             }
             if(flag==2){
-                printf("åç°¿æ¤œç´¢ã‚’ç¶™ç¶šã—ã¾ã™\n");
+                printf("–¼•ëŒŸõ‚ğŒp‘±‚µ‚Ü‚·\n");
             }
             if(flag==1){
-                printf("ã‚¨ãƒ©ãƒ¼\n");
-                printf("åç°¿æ¤œç´¢ã‚’çµ‚äº†ã—ã¾ã™\n");
+                printf("ƒGƒ‰[\n");
+                printf("–¼•ëŒŸõ‚ğI—¹‚µ‚Ü‚·\n");
             }
         }
     }
 	return 0;
 }
 
-node *insert_DATA_tree(node *x, node *sample, int mode){ //å…¨è¡¨ç¤ºã§ã®ã€äºŒåˆ†æ¢ç´¢æœ¨ã«æŒ¿å…¥
+node *insert_DATA_tree(node *x, node *sample, int mode){ //‘S•\\¦‚Å‚ÌA“ñ•ª’Tõ–Ø‚É‘}“ü
     int judge;
     int i;
     
@@ -851,33 +846,33 @@ node *insert_DATA_tree(node *x, node *sample, int mode){ //å…¨è¡¨ç¤ºã§ã®ã€äºŒ
         x->left = NULL;
 	}
 	else{
-        if     (mode == 1) judge = strcmp(x->name_ruby[0], sample->name_ruby[0]);//å§“
-        else if(mode == 2) judge = strcmp(x->name_ruby[1], sample->name_ruby[1]);//å
-        else if(mode == 3) judge = strcmp(x->nickname, sample->nickname);//å‘¼ã³å
-        else if(mode == 4) {//éƒµä¾¿ç•ªå·
+        if     (mode == 1) judge = strcmp(x->name_ruby[0], sample->name_ruby[0]);//©
+        else if(mode == 2) judge = strcmp(x->name_ruby[1], sample->name_ruby[1]);//–¼
+        else if(mode == 3) judge = strcmp(x->nickname, sample->nickname);//ŒÄ‚Ñ–¼
+        else if(mode == 4) {//—X•Ö”Ô†
             if(x->postal > sample->postal) judge = 1;
             else judge = -1;
         }
-        else if(mode == 5) {//éƒ½é“åºœçœŒ
+        else if(mode == 5) {//“s“¹•{Œ§
             if(x->prefecture > sample->prefecture) judge = 1;
             else judge = -1;
         }
-        else if(mode == 6) judge = strcmp(x->tell, sample->tell);//é›»è©±ç•ªå·
-        else if(mode == 7) judge = strcmp(x->mail, sample->mail);//ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
-        else if(mode == 8) {//ç”Ÿå¹´æœˆæ—¥
-            if(x->born[0] > sample->born[0]) judge = 1;//å¹´
+        else if(mode == 6) judge = strcmp(x->tell, sample->tell);//“d˜b”Ô†
+        else if(mode == 7) judge = strcmp(x->mail, sample->mail);//ƒ[ƒ‹ƒAƒhƒŒƒX
+        else if(mode == 8) {//¶”NŒ“ú
+            if(x->born[0] > sample->born[0]) judge = 1;//”N
             else if(x->born[0] < sample->born[0])judge = -1;
             else{
-                if(x->born[1] > sample->born[1]) judge = 1;//æœˆ
+                if(x->born[1] > sample->born[1]) judge = 1;//Œ
                 else if(x->born[1] < sample->born[1])judge = -1;
                 else{
-                    if(x->born[2] > sample->born[2]) judge = 1;//æ—¥
+                    if(x->born[2] > sample->born[2]) judge = 1;//“ú
                     else judge = -1;
                 }
             }
         }
-        else if(mode == 9) judge = strcmp(x->job, sample->job);//è·æ¥­
-        else if(mode == 10) {//æ€§åˆ¥
+        else if(mode == 9) judge = strcmp(x->job, sample->job);//E‹Æ
+        else if(mode == 10) {//«•Ê
             if(x->sex > sample->sex) judge = 1;
             else judge = -1;
         }
@@ -887,9 +882,9 @@ node *insert_DATA_tree(node *x, node *sample, int mode){ //å…¨è¡¨ç¤ºã§ã®ã€äºŒ
 	return x;
 }
 
-void treeprint(node *x, int updown){ //å…¨è¡¨ç¤ºã§ã®äºŒåˆ†æ¢ç´¢æœ¨ã®è¡¨ç¤º
+void treeprint(node *x, int updown){ //‘S•\\¦‚Å‚Ì“ñ•ª’Tõ–Ø‚Ì•\\¦
     int i;
-    char *name[3] = {"ç”·æ€§","å¥³æ€§","ãã®ä»–ã®æ€§åˆ¥"};
+    char *name[3] = {"’j«","—«","‚»‚Ì‘¼‚Ì«•Ê"};
 	if (x != NULL){
         if(updown == 1){
             treeprint(x->left, updown);
@@ -897,7 +892,7 @@ void treeprint(node *x, int updown){ //å…¨è¡¨ç¤ºã§ã®äºŒåˆ†æ¢ç´¢æœ¨ã®è¡¨ç¤º
         else{
             treeprint(x->right, updown);
         }
-        printf("%s %s %s %s %s %d %s %s %s %då¹´%dæœˆ%dæ—¥ %s %s\n",
+        printf("%s %s %s %s %s %d %s %s %s %d”N%dŒ%d“ú %s %s\n",
                 x->name_ruby[0],x->name_ruby[1],x->name[0],x->name[1],x->nickname,x->postal,
                 x->address,x->tell,x->mail,x->born[0],x->born[1],x->born[2],x->job,name[x->sex]);
         if(updown == 1){
@@ -915,56 +910,56 @@ int show_DATA(node **DATA, int root) {
     node *DATA_tree = NULL;
     int nocount = 0;
 
-    printf("\nä¸¦ã³æ›¿ãˆã®åŸºæº–ã«ã™ã‚‹å†…å®¹ã®ç•ªå·ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„\n");
+    printf("\n•À‚Ñ‘Ö‚¦‚ÌŠî€‚É‚·‚é“à—e‚Ì”Ô†‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
     while(1){
-        printf("å§“  ã€€ã€€ã€€ã€€ã€€ï¼š1\n");
-        printf("å            ï¼š2\n");
-        printf("å‘¼ã³å        ï¼š3\n");
-        printf("éƒµä¾¿ç•ªå·ã€€ã€€ã€€ï¼š4\n");
-        printf("éƒ½é“åºœçœŒã€€ã€€ã€€ï¼š5\n");
-        printf("é›»è©±ç•ªå·ã€€ã€€ã€€ï¼š6\n");
-        printf("ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼š7\n");
-        printf("ç”Ÿå¹´æœˆæ—¥ã€€ã€€ã€€ï¼š8\n");
-        printf("è·æ¥­ã€€ã€€ã€€ã€€ã€€ï¼š9\n");
-        printf("æ€§åˆ¥          ï¼š10\n");
+        printf("©  @@@@@F1\n");
+        printf("–¼            F2\n");
+        printf("ŒÄ‚Ñ–¼        F3\n");
+        printf("—X•Ö”Ô†@@@F4\n");
+        printf("“s“¹•{Œ§@@@F5\n");
+        printf("“d˜b”Ô†@@@F6\n");
+        printf("ƒ[ƒ‹ƒAƒhƒŒƒXF7\n");
+        printf("¶”NŒ“ú@@@F8\n");
+        printf("E‹Æ@@@@@F9\n");
+        printf("«•Ê          F10\n");
         if(scanf(" %d", &mode) != 1){
-            printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+            printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
             scanf("%*s");
         }
         else if(mode > 10 || mode < 1){
-            printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+            printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
         }
         else break;
     }
 
-    printf("æ˜‡é †ã‹é™é †ã‹é¸ã‚“ã§ãã ã•ã„  ");
+    printf("¸‡‚©~‡‚©‘I‚ñ‚Å‚­‚¾‚³‚¢  ");
     while(1){
-        if     (mode == 1 || mode == 2) printf("(50éŸ³é †)\n");
-        else if(mode == 3) printf("(50éŸ³é †ã§æ¼¢å­—ã¯ãƒ©ãƒ³ãƒ€ãƒ )\n");
+        if     (mode == 1 || mode == 2) printf("(50‰¹‡)\n");
+        else if(mode == 3) printf("(50‰¹‡‚ÅŠ¿š‚Íƒ‰ƒ“ƒ_ƒ€)\n");
         else if(mode == 4) printf("(0 < 9)\n");
-        else if(mode == 5) printf("(åŒ—æµ·é“ < æ²–ç¸„ã€€< ãã®ä»–)\n");
+        else if(mode == 5) printf("(–kŠC“¹ < ‰«“ê@< ‚»‚Ì‘¼)\n");
         else if(mode == 6) printf("(0 < 9)\n");
         else if(mode == 7) printf("(0 < 9 < A < z)\n");
         else if(mode == 8) printf("(0 < 9)\n");
-        else if(mode == 9) printf("(50éŸ³é †ã§æ¼¢å­—ã¯ãƒ©ãƒ³ãƒ€ãƒ )\n");
-        else if(mode == 10) printf("(ç”·æ€§ < å¥³æ€§ < ãã®ä»–ã®æ€§åˆ¥)\n");
-        printf("ï¼‘ï¼šæ˜‡é †ã€€ï¼’ï¼šé™é †\n");
+        else if(mode == 9) printf("(50‰¹‡‚ÅŠ¿š‚Íƒ‰ƒ“ƒ_ƒ€)\n");
+        else if(mode == 10) printf("(’j« < —« < ‚»‚Ì‘¼‚Ì«•Ê)\n");
+        printf("‚PF¸‡@‚QF~‡\n");
         if(scanf(" %d", &updown) != 1){
-            printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+            printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
             scanf("%*s");
         }
         else if(updown != 1 && updown != 2){
-            printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+            printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
         }
         else break;
     }
 
-    for(i = 0; i < bucket_size; i++){ //ãƒãƒƒã‚·ãƒ¥â€ãƒã‚§ã‚¤ãƒ³-ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’å·¡å›ã—ã¦ãƒ‡ãƒ¼ã‚¿ã‚’æ¢ã™
+    for(i = 0; i < bucket_size; i++){ //ƒnƒbƒVƒ…]ƒ`ƒFƒCƒ“-ƒe[ƒuƒ‹‚ğ„‰ñ‚µ‚Äƒf[ƒ^‚ğ’T‚·
         if(DATA[i] != NULL){
             chain = DATA[i];
             while(chain != NULL){ 
                 if(root == 1 || chain->passval == 0){
-                    DATA_tree = insert_DATA_tree(DATA_tree,chain,mode); //äºŒåˆ†æ¢ç´¢æœ¨ã«æŒ¿å…¥
+                    DATA_tree = insert_DATA_tree(DATA_tree,chain,mode); //“ñ•ª’Tõ–Ø‚É‘}“ü
                     chain = chain->next;
                 }
                 else{
@@ -975,11 +970,11 @@ int show_DATA(node **DATA, int root) {
         }
     }
 
-    treeprint(DATA_tree, updown); //å‡ºåŠ›
+    treeprint(DATA_tree, updown); //o—Í
     if(nocount != 0){
-        printf("\nç®¡ç†è€…æ¨©é™ãŒãªã„ãŸã‚ã€%däººã®ãƒ‡ãƒ¼ã‚¿ã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã«ã‚ˆã‚Šè¡¨ç¤ºã§ãã¾ã›ã‚“ã§ã—ãŸã€‚\n",nocount);
+        printf("\nŠÇ—ÒŒ ŒÀ‚ª‚È‚¢‚½‚ßA%dl‚Ìƒf[ƒ^‚ÍƒpƒXƒ[ƒh‚É‚æ‚è•\\¦‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B\n",nocount);
     }
-    printf("çµ‚äº†ã—ã¾ã™ã€‚\n");
+    printf("I—¹‚µ‚Ü‚·B\n");
 }
 
 int main() {
@@ -987,20 +982,20 @@ int main() {
     int root, rootval;
 
     node *DATA[bucket_size];
-    init_DATA(DATA); //DATAã«NULLã‚’ä»£å…¥
-    insert_DATA(DATA,&rootval);//ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰DATAã«ä»£å…¥
-    root_system(&root, &rootval);//ç®¡ç†è€…æ¨©é™
+    init_DATA(DATA); //DATA‚ÉNULL‚ğ‘ã“ü
+    insert_DATA(DATA,&rootval);//ƒtƒ@ƒCƒ‹‚©‚çDATA‚É‘ã“ü
+    root_system(&root, &rootval);//ŠÇ—ÒŒ ŒÀ
 
     while(1){
-        printf("ãƒ¢ãƒ¼ãƒ‰ã‚’é¸æŠã—ã¦ãã ã•ã„\n");
+        printf("ƒ‚[ƒh‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢\n");
         while(1){
-            printf("0ï¼šçµ‚äº†ã€€ï¼‘ï¼šç™»éŒ²ã€€ï¼’ï¼šå¤‰æ›´ã€€ï¼“ï¼šå‰Šé™¤ã€€ï¼”ï¼šæ¤œç´¢ã€€ï¼•ï¼šå…¨è¡¨ç¤º\n");
+            printf("0FI—¹@‚PF“o˜^@‚QF•ÏX@‚RFíœ@‚SFŒŸõ@‚TF‘S•\\¦\n");
             if(scanf(" %d", &i) != 1){
-                printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+                printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
                 scanf("%*s");
             }
             else if(i < 0 || i > 5){
-                printf("å…¥åŠ›ãŒä¸é©åˆ‡ã§ã™ã€‚\n");
+                printf("“ü—Í‚ª•s“KØ‚Å‚·B\n");
             }
             else break;
         }
@@ -1012,7 +1007,7 @@ int main() {
         else if(i==4) search_DATA(DATA,root);
         else if(i==5) show_DATA(DATA, root);
     }
-    printf("çµ‚äº†ã—ã¾ã™ã€‚");
-    push_file(DATA,rootval);//ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãå‡ºã—
+    printf("I—¹‚µ‚Ü‚·B");
+    push_file(DATA,rootval);//ƒtƒ@ƒCƒ‹‚É‘‚«o‚µ
     return 0;
 }

@@ -150,8 +150,7 @@ int search_DATA(node **DATA, int root){
                     case 1:
                         printf("名字を入力(全角カナ)\n");
                         printf("終了する場合は'end'と入力\n");
-                        scanf("%*c%*c%s",c);
-                        printf("%s",c);
+                        scanf("%s",c);
                         break;
                     case 2:
                         printf("名前を入力(全角カナ)\n");
@@ -249,8 +248,6 @@ int search_DATA(node **DATA, int root){
                         printf("%s %s %s %s %s %d %s %s %s %d年%d月%d日 %s %s\n",
                                 chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                                 chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
-                        DATA_search->next = keep;//戻す
-                        DATA_search = NULL;//再利用するため初期化
                     }
                     else{
                         printf("管理者権限がないため、%d件のデータはパスワードにより表示できませんでした。\n",nocount);
