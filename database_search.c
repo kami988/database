@@ -18,6 +18,7 @@ typedef struct _node{
     int sex;
     int passval;
     struct _node *next;
+    struct _node *right;
 } node;
 
 int resister_DATA(node** DATA, int root){}
@@ -127,7 +128,9 @@ int search_DATA(node **DATA, int root){
 
     int flag = 2;//継続条件
 	for(;;){
+	    DATA_search = NULL;
         printf("検索内容を選択\n");
+        printf("0:終了\n");
         printf("1:名字(全角カナ)\n");
         printf("2:名前(全角カナ)\n");
         printf("3:郵便番号\n");
@@ -135,21 +138,25 @@ int search_DATA(node **DATA, int root){
         printf("5:電話番号\n");
         printf("6:生年月日\n");
         printf("7:メールアドレス\n");
-        printf("8:終了\n");
         printf("※完全合致のみ表示します\n");
         scanf("%d",&i);
         if(1 <= i && i <= 6){
             for(;;){
+                born[0] = 1;        //初期化
+                p = 1;              //初期化
+                strcpy(c,"\n");     //初期化
+                DATA_search = NULL; //初期化
                 switch(i){
                     case 1:
                         printf("名字を入力(全角カナ)\n");
                         printf("終了する場合は'end'と入力\n");
-                        scanf("%s",c);
+                        scanf("%*c%*c%s",c);
+                        printf("%s",c);
                         break;
                     case 2:
                         printf("名前を入力(全角カナ)\n");
                         printf("終了する場合は'end'と入力\n");
-                        scanf("%s",c);
+                        scanf("%s\n",c);
                         break;
                     case 3:
                         printf("郵便番号を入力\n");
@@ -157,7 +164,7 @@ int search_DATA(node **DATA, int root){
                         scanf("%d",&p);
                         break;
                     case 4:
-                        printf("住所を入力してください");
+                        printf("住所を入力してください\n");
                         printf("終了する場合は'end'と入力\n");
                         scanf("%s",c);
                         break;
@@ -167,7 +174,7 @@ int search_DATA(node **DATA, int root){
                         scanf("%s",c);
                         break;
                     case 6:
-                        printf("生年月日を入力してください。");
+                        printf("生年月日を入力してください。\n");
                         printf("終了する場合は'0'と入力\n");
                         printf("年:"); scanf("%d",&born[0]);
                         if(born[0] == 0) break;
@@ -178,7 +185,6 @@ int search_DATA(node **DATA, int root){
                 if(p == 0) break;
                 else if(born[0] == 0) break;
                 else if(strcmp(c,"end") == 0) break;
-                strcpy(c,"タナカ");
                 //該当探索
                 k = 0;//ヒット回数
                 nocount = 0;//管理者権限が無く、はじかれた回数
@@ -186,7 +192,7 @@ int search_DATA(node **DATA, int root){
                     sample = DATA[j];
                     while(sample != NULL){
 
-                        switch(i){//一致の検査
+                        switch(i){ //一致の検査
                             case 1:
                                 l = strcmp(c,sample->name_ruby[0]);
                                 break;
@@ -216,20 +222,21 @@ int search_DATA(node **DATA, int root){
                             }
                             else if(DATA_search == NULL){
                                 DATA_search = sample;
-                                keep = DATA_search->next;
-                                DATA_search->next = NULL; //初期化
+                                DATA_search->right = NULL; //初期化
                             }
                             else{
                                 chain = DATA_search;
-                                while(chain->next != NULL){
-                                    chain = chain->next;
+                                while(chain->right != NULL){
+                                    chain = chain->right;
                                 }
-                                chain->next = sample;
+                                chain->right = sample;
+                                chain->right->right = NULL; //初期化
                             }
                         }
                         sample = sample->next;
                     }
                 }
+                
 
                 //検索結果表示
                 if(k == 0){
@@ -246,7 +253,7 @@ int search_DATA(node **DATA, int root){
                         DATA_search = NULL;//再利用するため初期化
                     }
                     else{
-                        printf("管理者権限がないため、%d件のデータはパスワードにより表示できませんでした。",nocount);
+                        printf("管理者権限がないため、%d件のデータはパスワードにより表示できませんでした。\n",nocount);
                     }
                 }
                 else if(k > 1){
@@ -258,12 +265,10 @@ int search_DATA(node **DATA, int root){
                         printf("%s %s %s %s %s %d %s %s %s %d年%d月%d日 %s %s\n",
                         chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                         chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
-                        chain = chain->next;
+                        chain = chain->right;
                     }
-                    DATA_search->next = keep;//戻す
-                    DATA_search = NULL;//再利用するため初期化
                     if(nocount != 0){
-                        printf("管理者権限がないため、%d件のデータはパスワードにより表示できませんでした。",nocount);
+                        printf("管理者権限がないため、%d件のデータはパスワードにより表示できませんでした。\n",nocount);
                     }
                 }else{
                     printf("エラー\n");
@@ -282,7 +287,8 @@ int search_DATA(node **DATA, int root){
                     printf("該当するメールアドレスが見つかりませんでした\n");
                     printf("検索を中止し選択画面へ移動します\n");
                     break;
-                }else{
+                }
+                else{
                     chain = DATA[j];
                     while(chain != NULL){
                         if(strcmp(c,chain->mail) == 0) break;
@@ -297,11 +303,11 @@ int search_DATA(node **DATA, int root){
                     if(root == 0 && chain->passval != 0){ //管理者権限ではなく、パスワードがある
                         printf("管理者権限がないため、登録されているパスワードを入力してください。（アクセスしない=0）\n");
                         scanf("%s",str);
-                        while((strlen(str) != 1 || str[0] != '0') && get_passval(str) != chain->passval){
-                            printf("パスワードが違います。もう1度入力してください。（アクセスしない=0）\n");
+                        while(strcmp(str,"0") != 0 && get_passval(str) != chain->passval){
+                            printf("パスワードが違います。入力し直してください。（アクセスしない=0）\n");
                             scanf("%s",str);
                         }
-                        if(strlen(str)==1 && str[0]=='0') {
+                        if(strcmp(str,"0") == 0) {
                             printf("中止しました\n");
                             break;
                         }
@@ -314,7 +320,7 @@ int search_DATA(node **DATA, int root){
                 }
             }
         }
-        else if(i == 8){
+        else if(i == 0){
             printf("名簿検索を終了しますか?\n");
             printf("yes:y or no:n\n");
             scanf("%*c%c",&chara);
@@ -352,7 +358,7 @@ int main(int argc, char *argv[]) {
         printf("0：終了　１：登録　２：変更　３：削除　４：検索　５：全表示\n");
         scanf("%d",&i);
         if(i==0){
-            printf("終了します。");
+            printf("終了します。\n");
             break;
         }else if(i==1){
             //resister_DATA(DATA, root);

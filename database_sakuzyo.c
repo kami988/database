@@ -65,7 +65,6 @@ int insert_DATA(node **DATA, int *rootval) {
 	char ex_tell[20], ex_mail[128];
     unsigned char ex_job[512];
     node *sample, *null_back;
-    char *tok;
 
     char *data_sample[] = {"タナカ3,ダイスケ,田中,大輔,ダイスキ,6511222,神戸市西区学園東町8-4,08012345235,r11130u1@g.kobe-kosen.co.jp,1998,5,2,名誉博士,0,0",
                            "タジマ2,ダイスケ,田島,大輔,アイツ,6511111,神戸市西区学園東町8-5,08012345343,r11130t1@gmail.com,1500,12,3,非常勤講師,2,11171859", //パスワード:kcct
@@ -140,16 +139,16 @@ int delete_DATA(node **DATA, int root) {
     char *name[3] = {"男性","女性","その他の性別"};
 
     while(1){
-        printf("削除したいメールアドレスを入力してください (終了=0)\n");
+        printf("削除したいユーザーのメールアドレスを入力してください（終了=0）\n");
         scanf( "%s", mail);
-        if(strlen(mail)==1 && mail[0]=='0') {
+        if(strcmp(mail,"0") == 0) {
             printf("終了します。\n");
             break;
         }
         val = get_hashval(mail);
         sample = DATA[val];
         if (sample == NULL) {
-            printf("存在していません\n");
+            printf("そのメールアドレスは登録されていません。\n");
             continue;
         }
         else {
@@ -161,21 +160,21 @@ int delete_DATA(node **DATA, int root) {
                     back = sample;
                     sample = sample->next;
                     if (sample == NULL) {
-                        printf("存在していません\n");
+                        printf("そのメールアドレスは登録されていません。\n");
                         break;
                     }
                 }
-                if(sample == NULL) continue;
+                if(sample == NULL) continue; //やり直し
             }
         }
         if(root == 0 && sample->passval != 0){ //管理者権限ではなく、パスワードがある
             printf("管理者権限がないため、登録されているパスワードを入力してください。（アクセスしない=0）\n");
             scanf("%s",str);
-            while((strlen(str) != 1 || str[0] != '0') && get_passval(str) != sample->passval){
+            while(strcmp(str,"0") != 0 && get_passval(str) != sample->passval){
                 printf("パスワードが違います。もう1度入力してください。（アクセスしない=0）\n");
                 scanf("%s",str);
             }
-            if(strlen(str)==1 && str[0]=='0') {
+            if(strcmp(str,"0") == 0) {
                 printf("中止しました。\n");
                 continue;
             }
