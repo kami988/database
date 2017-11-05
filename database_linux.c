@@ -49,6 +49,49 @@ int init_DATA(node **DATA) {// ハッシュテーブルをNULLで初期化
     }
 }
 
+int log_system(int mode, int root){
+    char c,str[100],str_ln[100];
+    FILE *fi;
+    time_t timer;
+    struct tm *t_st;
+    int flag_first = 0;
+    if(mode == 0){
+        if((fi = fopen("log.txt","r")) == NULL){//ファイルが存在しない
+            flag_first = 1;
+        }
+        else{//存在する
+            if(fscanf(fi,"%s", str) == EOF) flag_first = 1; //中身が空
+            else{
+                do{
+                    if(strcmp(str,"開始時刻:") == 0 || strcmp(str,"終了時刻:") == 0){
+                        strcpy(str_ln,str);
+                    }
+                } while(fscanf(fi,"%s", str) != EOF);
+                if(strcmp(str_ln,"開始時刻:") == 0){
+                    printf("\n他のユーザーが現在実行しているか、前のユーザーが強制終了したため、実行できません。\n");
+                    printf("他のユーザーが終了するのを待つか、誰も実行していない場合はlog.txtの最後の行を削除してください\n");
+                    exit(0);
+                }
+            }
+            fclose(fi);
+        }
+    }
+    
+    FILE *fo = fopen("log.txt","a");
+    time(&timer); // 現在時刻の取得
+    t_st = localtime(&timer);// 現在時刻を構造体に変換
+    if(mode == 0){
+        printf("開始時刻: %d年 %d月 %d日 %d時%d分%d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(flag_first == 1) fprintf(fo,"開始時刻: %d年 %d月 %d日 %d時%d分%d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else                fprintf(fo,"\n開始時刻: %d年 %d月 %d日 %d時%d分%d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+    }else{
+        printf("終了時刻: %d年 %d月 %d日 %d時%d分%d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(root == 1) fprintf(fo,"\n終了時刻: %d年 %d月 %d日 %d時%d分%d秒 (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else         fprintf(fo,"\n終了時刻: %d年 %d月 %d日 %d時%d分%d秒 (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+    }
+    fclose(fo);
+}
+
 int root_system(int *root, int *rootval){
     char str[256],str2[256];
     int num;
@@ -985,7 +1028,7 @@ int show_DATA(node **DATA, int root) {
 int main() {
     int i;
     int root, rootval;
-
+    log_system(0, 0);//開始時刻とファイルの状態確認
     node *DATA[bucket_size];
     init_DATA(DATA); //DATAにNULLを代入
     insert_DATA(DATA,&rootval);//ファイルからDATAに代入
@@ -1012,7 +1055,8 @@ int main() {
         else if(i==4) search_DATA(DATA,root);
         else if(i==5) show_DATA(DATA, root);
     }
-    printf("終了します。");
+    printf("終了します。\n");
     push_file(DATA,rootval);//ファイルに書き出し
+    log_system(1,root);//終了時刻と権限の書き出し
     return 0;
 }

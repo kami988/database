@@ -49,6 +49,49 @@ int init_DATA(node **DATA) {// ハッシュテーブルをNULLで初期化
     }
 }
 
+int log_system(int mode, int root){
+    char c,str[100],str_ln[100];
+    FILE *fi;
+    time_t timer;
+    struct tm *t_st;
+    int flag_first = 0;
+    if(mode == 0){
+        if((fi = fopen("log_windows.txt","r")) == NULL){//ファイルが存在しない
+            flag_first = 1;
+        }
+        else{//存在する
+            if(fscanf(fi,"%s", str) == EOF) flag_first = 1; //中身が空
+            else{
+                do{
+                    if(strcmp(str,"開始時刻:") == 0 || strcmp(str,"終了時刻:") == 0){
+                        strcpy(str_ln,str);
+                    }
+                } while(fscanf(fi,"%s", str) != EOF);
+                if(strcmp(str_ln,"開始時刻:") == 0){
+                    printf("\n他のユーザーが現在実行しているか、前のユーザーが強制終了したため、実行できません。\n");
+                    printf("他のユーザーが終了するのを待つか、誰も実行していない場合はlog.txtの最後の行を削除してください\n");
+                    exit(0);
+                }
+            }
+            fclose(fi);
+        }
+    }
+    
+    FILE *fo = fopen("log_windows.txt","a");
+    time(&timer); // 現在時刻の取得
+    t_st = localtime(&timer);// 現在時刻を構造体に変換
+    if(mode == 0){
+        printf("開始時刻: %d年 %d月 %d日 %d時%d分%d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(flag_first == 1) fprintf(fo,"開始時刻: %d年 %d月 %d日 %d時%d分%d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else                fprintf(fo,"\n開始時刻: %d年 %d月 %d日 %d時%d分%d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+    }else{
+        printf("終了時刻: %d年 %d月 %d日 %d時%d分%d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(root == 1) fprintf(fo,"\n終了時刻: %d年 %d月 %d日 %d時%d分%d秒 (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else         fprintf(fo,"\n終了時刻: %d年 %d月 %d日 %d時%d分%d秒 (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+    }
+    fclose(fo);
+}
+
 int root_system(int *root, int *rootval){
     char str[256],str2[256];
     int num;
@@ -195,7 +238,7 @@ int insert_DATA(node **DATA, int *rootval) {
 int push_file(node **DATA, int rootval){
     int i;
     node *chain;
-    FILE *fo = fopen("DATA.csv","w");
+    FILE *fo = fopen("DATA_windows.csv","w");
     char str[] = "root";
     fprintf(fo,"%d",rootval); //管理者権限のパスワード
     for(i = 0; i < bucket_size; i++){
@@ -647,7 +690,8 @@ int search_DATA(node **DATA, int root){
                     case 1:
                         printf("名字を入力(全角カナ)\n");
                         printf("終了する場合は'end'と入力\n");
-                        scanf("%s",c);
+                        scanf("%*c%*c%s",c);
+                        printf("%s",c);
                         break;
                     case 2:
                         printf("名前を入力(全角カナ)\n");
@@ -687,6 +731,7 @@ int search_DATA(node **DATA, int root){
                 for(j = 0; j < bucket_size; j++){
                     sample = DATA[j];
                     while(sample != NULL){
+
                         switch(i){ //一致の検査
                             case 1:
                                 l = strcmp(c,sample->name_ruby[0]);
@@ -732,6 +777,7 @@ int search_DATA(node **DATA, int root){
                     }
                 }
                 
+
                 //検索結果表\示
                 if(k == 0){
                     printf("該当する名簿が見つかりませんでした\n");
@@ -743,6 +789,8 @@ int search_DATA(node **DATA, int root){
                         printf("%s %s %s %s %s %d %s %s %s %d年%d月%d日 %s %s\n",
                                 chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                                 chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
+                        DATA_search->next = keep;//戻す
+                        DATA_search = NULL;//再利用するため初期化
                     }
                     else{
                         printf("管理者権限がないため、%d件のデータはパスワードにより表\示できませんでした。\n",nocount);
@@ -980,7 +1028,7 @@ int show_DATA(node **DATA, int root) {
 int main() {
     int i;
     int root, rootval;
-
+    log_system(0, 0);//開始時刻とファイルの状態確認
     node *DATA[bucket_size];
     init_DATA(DATA); //DATAにNULLを代入
     insert_DATA(DATA,&rootval);//ファイルからDATAに代入
@@ -1007,7 +1055,8 @@ int main() {
         else if(i==4) search_DATA(DATA,root);
         else if(i==5) show_DATA(DATA, root);
     }
-    printf("終了します。");
+    printf("終了します。\n");
     push_file(DATA,rootval);//ファイルに書き出し
+    log_system(1,root);//終了時刻と権限の書き出し
     return 0;
 }
