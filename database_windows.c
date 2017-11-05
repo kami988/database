@@ -3,7 +3,7 @@
 #include<string.h>
 #include<time.h>
 
-#define bucket_size 3 //(‘f”)
+#define bucket_size 103 //(‘f”)
 #define bucket_pass 32749391 //32,749,391(‘f”)
 
 typedef struct _node{
@@ -81,13 +81,13 @@ int log_system(int mode, int root){
     time(&timer); // Œ»ÝŽž‚ÌŽæ“¾
     t_st = localtime(&timer);// Œ»ÝŽž‚ð\‘¢‘Ì‚É•ÏŠ·
     if(mode == 0){
-        printf("ŠJŽnŽž: %d”N %dŒŽ %d“ú %dŽž%d•ª%d•b\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        if(flag_first == 1) fprintf(fo,"ŠJŽnŽž: %d”N %dŒŽ %d“ú %dŽž%d•ª%d•b",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        else                fprintf(fo,"\nŠJŽnŽž: %d”N %dŒŽ %d“ú %dŽž%d•ª%d•b",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        printf("ŠJŽnŽž: %4d”N %2dŒŽ %2d“ú %2dŽž%2d•ª%2d•b\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(flag_first == 1) fprintf(fo,"ŠJŽnŽž: %4d”N %2dŒŽ %2d“ú %2dŽž%2d•ª%2d•b",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else                fprintf(fo,"\nŠJŽnŽž: %4d”N %2dŒŽ %2d“ú %2dŽž%2d•ª%2d•b",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
     }else{
-        printf("I—¹Žž: %d”N %dŒŽ %d“ú %dŽž%d•ª%d•b\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        if(root == 1) fprintf(fo,"\nI—¹Žž: %d”N %dŒŽ %d“ú %dŽž%d•ª%d•b (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        else         fprintf(fo,"\nI—¹Žž: %d”N %dŒŽ %d“ú %dŽž%d•ª%d•b (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        printf("I—¹Žž: %4d”N %2dŒŽ %2d“ú %2dŽž%2d•ª%2d•b\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(root == 1) fprintf(fo,"\nI—¹Žž: %4d”N %2dŒŽ %2d“ú %2dŽž%2d•ª%2d•b (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else         fprintf(fo,"\nI—¹Žž: %4d”N %2dŒŽ %2d“ú %2dŽž%2d•ª%2d•b (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
     }
     fclose(fo);
 }

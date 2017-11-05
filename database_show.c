@@ -24,11 +24,6 @@ typedef struct _node{
     struct _node *left;
 } node;
 
-int resister_DATA(node** DATA, int root){}
-int delete_DATA(node** DATA, int root){}
-int change_DATA(node** DATA, int root){}
-int search_DATA(node** DATA, int root){}
-
 int get_hashval(char *key) {
     int hashval = 0;
 
@@ -52,6 +47,49 @@ int init_DATA(node **DATA) {// ハッシュテーブルをNULLで初期化
     for(i = 0; i < bucket_size; i++){
         DATA[i] = NULL;
     }
+}
+
+int log_system(int mode, int root){
+    char c,str[100],str_ln[100];
+    FILE *fi;
+    time_t timer;
+    struct tm *t_st;
+    int flag_first = 0;
+    if(mode == 0){
+        if((fi = fopen("log.txt","r")) == NULL){//ファイルが存在しない
+            flag_first = 1;
+        }
+        else{//存在する
+            if(fscanf(fi,"%s", str) == EOF) flag_first = 1; //中身が空
+            else{
+                do{
+                    if(strcmp(str,"開始時刻:") == 0 || strcmp(str,"終了時刻:") == 0){
+                        strcpy(str_ln,str);
+                    }
+                } while(fscanf(fi,"%s", str) != EOF);
+                if(strcmp(str_ln,"開始時刻:") == 0){
+                    printf("\n他のユーザーが現在実行しているか、前のユーザーが強制終了したため、実行できません。\n");
+                    printf("他のユーザーが終了するのを待つか、誰も実行していない場合はlog.txtの最後の行を削除してください\n");
+                    exit(0);
+                }
+            }
+            fclose(fi);
+        }
+    }
+    
+    FILE *fo = fopen("log.txt","a");
+    time(&timer); // 現在時刻の取得
+    t_st = localtime(&timer);// 現在時刻を構造体に変換
+    if(mode == 0){
+        printf("開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(flag_first == 1) fprintf(fo,"開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else                fprintf(fo,"\n開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+    }else{
+        printf("終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(root == 1) fprintf(fo,"\n終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒 (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else         fprintf(fo,"\n終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒 (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+    }
+    fclose(fo);
 }
 
 int root_system(int *root, int *rootval){
@@ -219,11 +257,19 @@ int push_file(node **DATA, int rootval){
     fclose(fo);
 }
 
-node *insert_DATA_tree(node *x, node *sample, int mode){
+int resister_DATA(node** DATA){}
+
+
+int change_DATA(node **DATA,int root){}
+
+int delete_DATA(node **DATA, int root) {}
+
+int search_DATA(node **DATA, int root){}
+
+node *insert_DATA_tree(node *x, node *sample, int mode){ //全表示での、二分探索木に挿入
     int judge;
     int i;
     
-
 	if(x == NULL){
         x = sample;
         x->right = NULL;
@@ -266,7 +312,7 @@ node *insert_DATA_tree(node *x, node *sample, int mode){
 	return x;
 }
 
-void treeprint(node *x, int updown){
+void treeprint(node *x, int updown){ //全表示での二分探索木の表示
     int i;
     char *name[3] = {"男性","女性","その他の性別"};
 	if (x != NULL){
@@ -364,7 +410,7 @@ int show_DATA(node **DATA, int root) {
 int main() {
     int i;
     int root, rootval;
-
+    log_system(0, 0);//開始時刻とファイルの状態確認
     node *DATA[bucket_size];
     init_DATA(DATA); //DATAにNULLを代入
     insert_DATA(DATA,&rootval);//ファイルからDATAに代入
@@ -385,13 +431,14 @@ int main() {
         }
         
         if     (i==0) {break;}
-        else if(i==1) resister_DATA(DATA, root);
+        else if(i==1) resister_DATA(DATA);
         else if(i==2) change_DATA(DATA,root);
         else if(i==3) delete_DATA(DATA,root);
         else if(i==4) search_DATA(DATA,root);
         else if(i==5) show_DATA(DATA, root);
     }
-    printf("終了します。");
+    printf("終了します。\n");
     push_file(DATA,rootval);//ファイルに書き出し
+    log_system(1,root);//終了時刻と権限の書き出し
     return 0;
 }

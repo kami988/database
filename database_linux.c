@@ -3,7 +3,7 @@
 #include<string.h>
 #include<time.h>
 
-#define bucket_size 3 //(素数)
+#define bucket_size 103 //(素数)
 #define bucket_pass 32749391 //32,749,391(素数)
 
 typedef struct _node{
@@ -81,13 +81,13 @@ int log_system(int mode, int root){
     time(&timer); // 現在時刻の取得
     t_st = localtime(&timer);// 現在時刻を構造体に変換
     if(mode == 0){
-        printf("開始時刻: %d年 %d月 %d日 %d時%d分%d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        if(flag_first == 1) fprintf(fo,"開始時刻: %d年 %d月 %d日 %d時%d分%d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        else                fprintf(fo,"\n開始時刻: %d年 %d月 %d日 %d時%d分%d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        printf("開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(flag_first == 1) fprintf(fo,"開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else                fprintf(fo,"\n開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
     }else{
-        printf("終了時刻: %d年 %d月 %d日 %d時%d分%d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        if(root == 1) fprintf(fo,"\n終了時刻: %d年 %d月 %d日 %d時%d分%d秒 (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
-        else         fprintf(fo,"\n終了時刻: %d年 %d月 %d日 %d時%d分%d秒 (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        printf("終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        if(root == 1) fprintf(fo,"\n終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒 (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        else         fprintf(fo,"\n終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒 (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
     }
     fclose(fo);
 }
