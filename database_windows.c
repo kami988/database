@@ -266,6 +266,8 @@ int resister_DATA(node** DATA){
     unsigned char ex_name_ruby[2][256], ex_name[2][128], ex_nickname[128], ex_address[512];
 	char ex_tell[20], ex_mail[128];
     unsigned char ex_job[512];
+    char *name[3] = {"男性","女性","その他の性別"};
+
     node *sample, *null_back;
     
     while(1){
@@ -335,21 +337,22 @@ int resister_DATA(node** DATA){
 			printf("パスワードを入力してください。(4字以上)\n");
 			scanf("%s",str);
 			while(strlen(str) < 4){
-			printf("4字以上ではありません。もう1度入力してください。\n");
-			scanf("%s",str);
+			    printf("4字以上ではありません。もう1度入力してください。\n");
+			    scanf("%s",str);
 			}
 			printf("確認のためもう1度入力してください。\n");
 			scanf("%s",str2);
 			while(strcmp(str,str2)!=0){
-				printf("パスワードが違います。もう1度入力してください。\n");
+				printf("パスワードが一致しませんでした。もう1度登録し直してください。\n");
 				scanf("%s",str);
 				printf("確認のためもう1度入力してください。\n");
 				scanf("%s",str2);
-			}
+            }
+            sample->passval = get_passval(str);
 		    printf("登録が完了しました。\n");
 		}
 		
-		printf("%s %s %s %s %s %d %s %s %s %d %d %d %s %d\n",ex_name_ruby[0],ex_name_ruby[1],ex_name[0],ex_name[1],ex_nickname,ex_postal,ex_address,ex_tell,ex_mail,ex_born[0],ex_born[1],ex_born[2],ex_job,ex_sex);
+		printf("%s %s %s %s %s %d %s %s %s %d %d %d %s %s\n",ex_name_ruby[0],ex_name_ruby[1],ex_name[0],ex_name[1],ex_nickname,ex_postal,ex_address,ex_tell,ex_mail,ex_born[0],ex_born[1],ex_born[2],ex_job,name[ex_sex]);
 		
 	    printf("住所登録を続行しますか？	Yes=1:  No=2:  (入力)：");
 	    scanf("%d",&i);
