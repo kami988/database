@@ -63,7 +63,6 @@ int log_system(int mode, int root){
         else{//存在する
             if(fscanf(fi,"%s", str) == EOF) flag_first = 1; //中身が空
             else{
-                printf("%d\n",str[0]);
                 do{
                     if(strcmp(str,"開始時刻:") == 0 || strcmp(str,"終了時刻:") == 0){
                         strcpy(str_ln,str);
