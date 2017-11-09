@@ -82,11 +82,11 @@ int log_system(int mode, int root){
     time(&timer); // 現在時刻の取得
     t_st = localtime(&timer);// 現在時刻を構造体に変換
     if(mode == 0){
-        printf("開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        printf("\n開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
         if(flag_first == 1) fprintf(fo,"開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
         else                fprintf(fo,"\n開始時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
     }else{
-        printf("終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
+        printf("\n終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒\n",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
         if(root == 1) fprintf(fo,"\n終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒 (root)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
         else         fprintf(fo,"\n終了時刻: %4d年 %2d月 %2d日 %2d時%2d分%2d秒 (user)",1900+t_st->tm_year,t_st->tm_mon+1,t_st->tm_mday,t_st->tm_hour,t_st->tm_min,t_st->tm_sec);
     }
@@ -96,7 +96,7 @@ int log_system(int mode, int root){
 int root_system(int *root, int *rootval){
     char str[256],str2[256];
     int num;
-    printf("管理者権限の有無を選んでください\n");
+    printf("\n管理者権限の有無を選んでください\n");
     while(1){
         printf("１：あり　０：なし\n");
         if(scanf(" %d", root) != 1){
@@ -169,9 +169,14 @@ int insert_DATA(node **DATA, int *rootval) {
     "徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県",
     "熊本県","大分県","宮崎県","鹿児島県","沖縄県"
     };
+    FILE *fi;
 
-    FILE *fi = fopen("DATA.csv","r");
-    if(fgetc(fi) == EOF){ //ファイルが空なら終わり
+    if((fi = fopen("DATA.csv","r")) == NULL){
+        char str_root[] = "root";
+        *rootval = get_passval(str_root); //管理者権限のパスワードをrootにせってい
+        return 1;
+    }
+    else if(fgetc(fi) == EOF){ //ファイルが空なら終わり
         char str_root[] = "root";
         *rootval = get_passval(str_root); //管理者権限のパスワードをrootにせってい
         return 1;
@@ -623,17 +628,35 @@ int delete_DATA(node **DATA, int root) {
         printf("%s %s %s %s %s %d %s %s %s %d年%d月%d日 %s %s\n",
                sample->name_ruby[0], sample->name_ruby[1], sample->name[0], sample->name[1], sample->nickname, sample->postal,
                sample->address, sample->tell, sample->mail, sample->born[0], sample->born[1], sample->born[2], sample->job, name[sample->sex]);
-        printf("以上の情報を削除しても本当によろしいですか？YES=1,NO=0\n");
-        scanf("%d", &handan);
-        if (handan == 0) {
-            printf("中止しました\n");
-            continue;
-        }
-        else if (handan == 1) {
-            printf("後悔しませんね？YES=1,NO=0\n");
-            scanf("%d", &handan);
+               while(1){
+                printf("以上の情報を削除しても本当によろしいですか？YES=1,NO=0\n");
+              if (scanf("%d",&handan)!=1){
+                  printf("入力が不適切です\n");
+                  scanf("%*s");
+              }
+              else if (handan != 0 && handan != 1) {
+                  printf("入力が不適切です\n");
+              }
+              else break;
+          }
+          if(handan==0){
+              printf("中止しました。メールアドレス入力に戻ります\n");
+              continue;
+          }
+          else if (handan == 1) {
+              while(1){
+                  printf("後悔しませんね？YES=1,NO=0\n");
+                  if (scanf("%d",&handan)!=1){
+                      printf("入力が不適切です\n");
+                      scanf("%*s");
+                  }
+                  else if (handan != 0 && handan != 1) {
+                      printf("入力が不適切です\n");
+                  }
+                  else break;
+              }
             if (handan == 0) {
-                printf("中止しました\n");
+                printf("中止しました。メールアドレス入力画面に戻ります\n");
                 continue;
             }
             else if (handan == 1) {
@@ -666,7 +689,6 @@ int search_DATA(node **DATA, int root){
     int born[3];
     char *name[3] = {"男性","女性","その他の性別"};
     node *sample, *chain;
-    node *keep;//後で戻すnextのポインタ
     node *DATA_search = NULL;//検索結果
     int nocount = 0;
 
@@ -690,17 +712,18 @@ int search_DATA(node **DATA, int root){
                 p = 1;              //初期化
                 strcpy(c,"\n");     //初期化
                 DATA_search = NULL; //初期化
+                k = 0;//ヒット回数
+                nocount = 0;//管理者権限が無く、はじかれた回数
                 switch(i){
                     case 1:
                         printf("名字を入力(全角カナ)\n");
                         printf("終了する場合は'end'と入力\n");
-                        scanf("%*c%*c%s",c);
-                        printf("%s",c);
+                        scanf("%s",c);
                         break;
                     case 2:
                         printf("名前を入力(全角カナ)\n");
                         printf("終了する場合は'end'と入力\n");
-                        scanf("%s\n",c);
+                        scanf("%s",c);
                         break;
                     case 3:
                         printf("郵便番号を入力\n");
@@ -730,12 +753,9 @@ int search_DATA(node **DATA, int root){
                 else if(born[0] == 0) break;
                 else if(strcmp(c,"end") == 0) break;
                 //該当探索
-                k = 0;//ヒット回数
-                nocount = 0;//管理者権限が無く、はじかれた回数
                 for(j = 0; j < bucket_size; j++){
                     sample = DATA[j];
                     while(sample != NULL){
-
                         switch(i){ //一致の検査
                             case 1:
                                 l = strcmp(c,sample->name_ruby[0]);
@@ -793,8 +813,6 @@ int search_DATA(node **DATA, int root){
                         printf("%s %s %s %s %s %d %s %s %s %d年%d月%d日 %s %s\n",
                                 chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                                 chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
-                        DATA_search->next = keep;//戻す
-                        DATA_search = NULL;//再利用するため初期化
                     }
                     else{
                         printf("管理者権限がないため、%d件のデータはパスワードにより表示できませんでした。\n",nocount);
@@ -860,28 +878,12 @@ int search_DATA(node **DATA, int root){
                     printf("%s %s %s %s %s %d %s %s %s %d年%d月%d日 %s %s\n",
                     chain->name_ruby[0],chain->name_ruby[1],chain->name[0],chain->name[1],chain->nickname,chain->postal,
                     chain->address,chain->tell,chain->mail,chain->born[0],chain->born[1],chain->born[2],chain->job,name[chain->sex]);
-                    chain = chain->next;
                 }
             }
         }
-        else if(i == 0){
-            printf("名簿検索を終了しますか?\n");
-            printf("yes:y or no:n\n");
-            scanf("%*c%c",&chara);
-            if(chara=='y') flag=0;
-            else if(chara=='n') flag=2;
-            else flag=1;
-            if(flag==0){
+        else if(i == 0){       
                 printf("名簿検索を終了します\n");
                 break;
-            }
-            if(flag==2){
-                printf("名簿検索を継続します\n");
-            }
-            if(flag==1){
-                printf("エラー\n");
-                printf("名簿検索を終了します\n");
-            }
         }
     }
 	return 0;
@@ -1032,6 +1034,7 @@ int show_DATA(node **DATA, int root) {
 int main() {
     int i;
     int root, rootval;
+    printf("\n住所録プログラムを開始します。\n");
     log_system(0, 0);//開始時刻とファイルの状態確認
     node *DATA[bucket_size];
     init_DATA(DATA); //DATAにNULLを代入
@@ -1039,7 +1042,7 @@ int main() {
     root_system(&root, &rootval);//管理者権限
 
     while(1){
-        printf("モードを選択してください\n");
+        printf("\nモードを選択してください\n");
         while(1){
             printf("0：終了　１：登録　２：変更　３：削除　４：検索　５：全表示\n");
             if(scanf(" %d", &i) != 1){
