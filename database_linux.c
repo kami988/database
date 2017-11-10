@@ -273,6 +273,14 @@ int resister_DATA(node** DATA){
 	char ex_tell[20], ex_mail[128];
     unsigned char ex_job[512];
     char *name[3] = {"男性","女性","その他の性別"};
+    char *prefecture[47] ={"北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
+    "茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県",
+    "新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県",
+    "静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県",
+    "奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県",
+    "徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県",
+    "熊本県","大分県","宮崎県","鹿児島県","沖縄県"
+    };
 
     node *sample, *null_back;
     
@@ -323,6 +331,14 @@ int resister_DATA(node** DATA){
         strcpy(sample->mail, ex_mail);
         strcpy(sample->job, ex_job);
 
+		sample->prefecture = 48; //都道府県割り当て(48は住所に都道府県が無かった場合)
+        for(i = 0; i < 47; i++){
+            if(strstr(sample->address, prefecture[i]) != NULL) {
+                sample->prefecture = i+1;
+                break;
+            }
+        }
+        
 		num = get_hashval(ex_mail); //メールアドレスからハッシュ値を生成
         //printf("%d\n",num);
         if(DATA[num] == NULL) {//衝突なし
@@ -369,7 +385,7 @@ int resister_DATA(node** DATA){
 }
 
 
-int change_DATA(node **DATA,int root){
+int change_DATA(node **DATA,int root, int *rootval){
 	int i,sw;
 	int flag=0;
 
@@ -454,7 +470,6 @@ int change_DATA(node **DATA,int root){
         			scanf("%s",str);
         			sample->name_ruby[1]=(char*)realloc(sample->name_ruby[1],sizeof(char)*(strlen(str)+1));
         			strcpy(sample->name_ruby[1],str);
-            
         			printf("\n姓名が %s %s ( %s %s )に変更されました\n",sample->name[0],sample->name[1]
         																				,sample->name_ruby[0],sample->name_ruby[1]);
         			break;
@@ -501,6 +516,9 @@ int change_DATA(node **DATA,int root){
         			sample->mail=(char*)realloc(sample->mail,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->mail,str);
         			printf("\nメールアドレスが %s に変更されました\n",sample->mail);
+        			push_file(DATA, *rootval);
+        			init_DATA(DATA); //DATAにNULLを代入
+    				insert_DATA(DATA, rootval);//ファイルからDATAに代入
         			break;
             
                 case 7: 
@@ -691,7 +709,6 @@ int search_DATA(node **DATA, int root){
     node *sample, *chain;
     node *DATA_search = NULL;//検索結果
     int nocount = 0;
-
     int flag = 2;//継続条件
 	for(;;){
 	    DATA_search = NULL;
@@ -801,7 +818,6 @@ int search_DATA(node **DATA, int root){
                     }
                 }
                 
-
                 //検索結果表示
                 if(k == 0){
                     printf("該当する名簿が見つかりませんでした\n");
@@ -1054,10 +1070,9 @@ int main() {
             }
             else break;
         }
-        
         if     (i==0) {break;}
         else if(i==1) resister_DATA(DATA);
-        else if(i==2) change_DATA(DATA,root);
+        else if(i==2) change_DATA(DATA,root,&rootval);
         else if(i==3) delete_DATA(DATA,root);
         else if(i==4) search_DATA(DATA,root);
         else if(i==5) show_DATA(DATA, root);
