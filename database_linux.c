@@ -110,10 +110,10 @@ int root_system(int *root, int *rootval){
     }
     if(*root == 1){
         printf("パスワードを入力してください。(初期パスワード：root)\n");
-        strcpy(str,getpass(""));//scanf("%s",str);
+        strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
         while(get_passval(str) != *rootval){
             printf("パスワードが違います。もう1度入力してください。（管理者権限でログインしない：0）\n");
-            strcpy(str,getpass(""));//scanf("%s",str);
+            strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
             if(strcmp(str,"0") == 0) {
                 *root = 0;
                 return 1;
@@ -133,13 +133,13 @@ int root_system(int *root, int *rootval){
         }
         while(num == 1){
             printf("新しいパスワードを入力してください。(4字以上)\n");
-            strcpy(str,getpass(""));//scanf("%s",str);
+            strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
             while(strlen(str) < 4){
                 printf("4字以上ではありません。もう1度入力してください。\n");
-                strcpy(str,getpass(""));//scanf("%s",str);
+                strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
             }
             printf("確認のためもう1度入力してください。\n");
-            strcpy(str2,getpass(""));//scanf("%s",str2);
+            strcpy(str2,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str2);
             if(strcmp(str,str2)!=0){
                 printf("パスワードが一致しませんでした。登録し直してください。\n");
             }
@@ -236,7 +236,11 @@ int insert_DATA(node **DATA, int *rootval) {
             }
             null_back->next = sample;//NULLだったポインタの手前のnext(つまりNULL)に代入
         }
-        if (fgetc(fi) == EOF) break;//ファイルの終わりで終了
+        do{
+            c = fgetc(fi);
+        } while (c != EOF && (c == '\n' || c == ' '));//ファイルの終わりで終了
+        if(feof(fi)) break;
+        fseek(fi, -1, SEEK_CUR);
     }
     fclose(fi);
 }
@@ -267,7 +271,7 @@ int resister_DATA(node** DATA){
     char c;
     char str[256],str2[256];
     int num;
-    int i,j;
+    int i,j,cmp;
     int ex_postal, ex_born[3], ex_sex;
     unsigned char ex_name_ruby[2][256], ex_name[2][128], ex_nickname[128], ex_address[512];
 	char ex_tell[20], ex_mail[128];
@@ -282,7 +286,7 @@ int resister_DATA(node** DATA){
     "熊本県","大分県","宮崎県","鹿児島県","沖縄県"
     };
 
-    node *sample, *null_back;
+    node *sample, *null_back, *chain;
     
     while(1){
     	printf("登録データを入力してください。\n");
@@ -295,8 +299,24 @@ int resister_DATA(node** DATA){
     	printf("郵便番号を入力:");		scanf("%d",&ex_postal);
     	printf("住所:");					scanf("%s",ex_address);
     	printf("電話番号:");    			scanf("%s",ex_tell);
-    	printf("メールアドレス:");	    scanf("%s",ex_mail);
-    	printf("[生年月日を入力]\n");
+        do{
+            cmp = 1;
+            printf("メールアドレス:");	    scanf("%s",ex_mail);
+            for(i = 0; i < bucket_size; i++){ //ハッシュ‐チェイン-テーブルを巡回して同じメールアドレスを探す
+                if(DATA[i] != NULL){
+                    chain = DATA[i];
+                    while(chain != NULL){
+                        cmp = strcmp(ex_mail, chain->mail);
+                        if(cmp == 0) break;
+                        chain = chain->next;
+                    }
+                    if(cmp == 0) break;
+                }
+                if(cmp == 0) break;
+            }
+            if(cmp == 0) printf("そのメールアドレスは既に登録されています\n");       
+        }while(cmp == 0);
+        printf("[生年月日を入力]\n");
     	printf("西暦:");			    	scanf("%d",&ex_born[0]);
     	printf("誕生月:");    			scanf("%d",&ex_born[1]);
     	printf("誕生日:");		    	scanf("%d",&ex_born[2]);
@@ -357,18 +377,18 @@ int resister_DATA(node** DATA){
 		scanf("%d",&num);
 		if(num == 1){
 			printf("パスワードを入力してください。(4字以上)\n");
-			strcpy(str,getpass(""));//scanf("%s",str);
+			strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
 			while(strlen(str) < 4){
 			    printf("4字以上ではありません。もう1度入力してください。\n");
-			    strcpy(str,getpass(""));//scanf("%s",str);
+			    strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
 			}
 			printf("確認のためもう1度入力してください。\n");
-			strcpy(str2,getpass(""));//scanf("%s",str2);
+			strcpy(str2,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str2);
 			while(strcmp(str,str2)!=0){
 				printf("パスワードが一致しませんでした。もう1度登録し直してください。\n");
-				strcpy(str,getpass(""));//scanf("%s",str);
+				strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
 				printf("確認のためもう1度入力してください。\n");
-				strcpy(str2,getpass(""));//scanf("%s",str2);
+				strcpy(str2,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str2);
             }
             sample->passval = get_passval(str);
 		    printf("登録が完了しました。\n");
@@ -420,10 +440,10 @@ int change_DATA(node **DATA,int root, int *rootval){
     	}
     	 if(root == 0 && sample->passval != 0){ //管理者権限ではなく、パスワードがある
             printf("管理者権限がないため、登録されているパスワードを入力してください。（アクセスしない=0）\n");
-            strcpy(str,getpass(""));//scanf("%s",str);
+            strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
             while(strcmp(str,"0") != 0 && get_passval(str) != sample->passval){
                 printf("パスワードが違います。もう1度入力してください。（アクセスしない=0）\n");
-                strcpy(str,getpass(""));//scanf("%s",str);
+                strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
             }
             if(strcmp(str,"0") == 0) {
                 printf("中止しました。\n");
@@ -559,10 +579,10 @@ int change_DATA(node **DATA,int root, int *rootval){
                     }
                     else if(root == 0){
                         printf("\n現在のパスワードを入力してください\n");
-                        strcpy(str,getpass(""));//scanf("%s",str);
+                        strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
                         while(strcmp(str,"0") != 0 && get_passval(str) != sample->passval){
                             printf("パスワードが違います。もう1度入力してください。（アクセスしない=0）\n");
-                            strcpy(str,getpass(""));//scanf("%s",str);
+                            strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
                         }
                         if(strcmp(str,"0") == 0) {
                             printf("中止しました。\n");
@@ -571,13 +591,13 @@ int change_DATA(node **DATA,int root, int *rootval){
                     }
                     while(1){
                         printf("登録するパスワード(4文字以上)：");
-                        strcpy(str,getpass(""));//scanf("%s",str);
+                        strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
                         while(strlen(str) < 4){
                             printf("\n4字以上ではありません。もう1度入力してください。\n");
-                            strcpy(str,getpass(""));//scanf("%s",str);
+                            strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
                         }
                         printf("\n確認のためもう1度入力してください\n");
-                        strcpy(str2,getpass(""));//scanf("%s",str2);
+                        strcpy(str2,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str2);
                         if(strcmp(str,str2)!=0){
                             printf("\nパスワードが一致しませんでした。登録し直してください\n");//繰り返し
                             continue;
@@ -632,10 +652,10 @@ int delete_DATA(node **DATA, int root) {
         }
         if(root == 0 && sample->passval != 0){ //管理者権限ではなく、パスワードがある
             printf("管理者権限がないため、登録されているパスワードを入力してください。（アクセスしない=0）\n");
-            strcpy(str,getpass(""));//scanf("%s",str);
+            strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
             while(strcmp(str,"0") != 0 && get_passval(str) != sample->passval){
                 printf("パスワードが違います。もう1度入力してください。（アクセスしない=0）\n");
-                strcpy(str,getpass(""));//scanf("%s",str);
+                strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
             }
             if(strcmp(str,"0") == 0) {
                 printf("中止しました。\n");
@@ -880,10 +900,10 @@ int search_DATA(node **DATA, int root){
                     printf("該当する名簿が見つかりました\n");
                     if(root == 0 && chain->passval != 0){ //管理者権限ではなく、パスワードがある
                         printf("管理者権限がないため、登録されているパスワードを入力してください。（アクセスしない=0）\n");
-                        strcpy(str,getpass(""));//scanf("%s",str);
+                        strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
                         while(strcmp(str,"0") != 0 && get_passval(str) != chain->passval){
                             printf("パスワードが違います。入力し直してください。（アクセスしない=0）\n");
-                            strcpy(str,getpass(""));//scanf("%s",str);
+                            strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
                         }
                         if(strcmp(str,"0") == 0) {
                             printf("中止しました\n");
