@@ -171,7 +171,7 @@ int insert_DATA(node **DATA, int *rootval) {
     };
     FILE *fi;
 
-    if((fi = fopen("DATA.csv","r")) == NULL){
+    if((fi = fopen(".DATA.csv","r")) == NULL){
         char str_root[] = "root";
         *rootval = get_passval(str_root); //管理者権限のパスワードをrootにせってい
         return 1;
@@ -296,9 +296,16 @@ int resister_DATA(node** DATA){
     	printf("姓(漢字):");				scanf("%s",ex_name[0]);
     	printf("名(漢字):");				scanf("%s",ex_name[1]);
     	printf("ニックネーム:");			scanf("%s",ex_nickname);
-    	printf("郵便番号を入力:");		scanf("%d",&ex_postal);
-    	printf("住所:");					scanf("%s",ex_address);
-    	printf("電話番号:");    			scanf("%s",ex_tell);
+        while(1){
+            printf("郵便番号を入力(ハイフンなし):");		
+            if(scanf(" %d", &ex_postal) != 1){
+                printf("入力が不適切です。\n");
+                scanf("%*s");
+            }
+            else break;
+        }
+    	printf("住所(都道府県で並び替え可能です):");					scanf("%s",ex_address);
+    	printf("電話番号(ハイフンなし):");    			scanf("%s",ex_tell);
         do{
             cmp = 1;
             printf("メールアドレス:");	    scanf("%s",ex_mail);
@@ -315,13 +322,50 @@ int resister_DATA(node** DATA){
                 if(cmp == 0) break;
             }
             if(cmp == 0) printf("そのメールアドレスは既に登録されています\n");       
-        }while(cmp == 0);
-        printf("[生年月日を入力]\n");
-    	printf("西暦:");			    	scanf("%d",&ex_born[0]);
-    	printf("誕生月:");    			scanf("%d",&ex_born[1]);
-    	printf("誕生日:");		    	scanf("%d",&ex_born[2]);
+        }while(cmp == 0);		    	
+        while(1){
+            printf("[生年月日を入力]\n");
+            printf("西暦:");		
+            if(scanf("%d",&ex_born[0]) != 1){
+                printf("入力が不適切です。\n");
+                scanf("%*s");
+            }
+            else break;
+        }
+    	while(1){
+            printf("誕生月:");	
+            if(scanf("%d",&ex_born[1]) != 1){
+                printf("入力が不適切です。\n");
+                scanf("%*s");
+            }
+            else if(ex_born[1] < 1 || ex_born[1] > 12){
+                printf("入力が不適切です。\n");
+            }
+            else break;
+        }
+        while(1){
+            printf("誕生日:");
+            if(scanf("%d",&ex_born[2]) != 1){
+                printf("入力が不適切です。\n");
+                scanf("%*s");
+            }
+            else if(ex_born[2] < 1 || ex_born[2] > 31){
+                printf("入力が不適切です。\n");
+            }
+            else break;
+        }
     	printf("職業:");	    			scanf("%s",ex_job);
-    	printf("性別(男性=0, 女性=1, その他=2):");	scanf("%d",&ex_sex);
+        while(1){
+            printf("性別(男性=0, 女性=1, その他=2):");	
+            if(scanf("%d",&ex_sex) != 1){
+                printf("入力が不適切です。\n");
+                scanf("%*s");
+            }
+            else if(ex_sex < 0 || ex_sex > 2){
+                printf("入力が不適切です。\n");
+            }
+            else break;
+        }
     	
         sample = (node *)malloc(sizeof(node));
 		
@@ -372,9 +416,18 @@ int resister_DATA(node** DATA){
             null_back->next = sample;//NULLだったポインタの手前のnext(つまりNULL)に代入
         }
         
-        printf("パスワードを登録しますか？");
-		printf("1：はい　0：いいえ\n");
-		scanf("%d",&num);
+        printf("パスワードを登録しますか？\n");
+        while(1){
+            printf("1：はい　0：いいえ\n");
+            if(scanf("%d",&num) != 1){
+                printf("入力が不適切です。\n");
+                scanf("%*s");
+            }
+            else if(num < 0 || num > 1){
+                printf("入力が不適切です。\n");
+            }
+            else break;
+        }
 		if(num == 1){
 			printf("パスワードを入力してください。(4字以上)\n");
 			strcpy(str,getpass("(入力は画面に表示されません)\n"));//scanf("%s",str);
@@ -396,8 +449,18 @@ int resister_DATA(node** DATA){
 		
 		printf("%s %s %s %s %s %d %s %s %s %d %d %d %s %s\n",ex_name_ruby[0],ex_name_ruby[1],ex_name[0],ex_name[1],ex_nickname,ex_postal,ex_address,ex_tell,ex_mail,ex_born[0],ex_born[1],ex_born[2],ex_job,name[ex_sex]);
 		
-	    printf("住所登録を続行しますか？	Yes=1:  No=2:  (入力)：");
-	    scanf("%d",&i);
+        
+        while(1){
+            printf("住所登録を続行しますか？	Yes=1:  No=2:  (入力)：");
+            if(scanf("%d",&i) != 1){
+                printf("入力が不適切です。\n");
+                scanf("%*s");
+            }
+            else if(i < 1 || i > 2){
+                printf("入力が不適切です。\n");
+            }
+            else break;
+        }
 	    if(i==2){
 		    break;
 	    }
@@ -414,6 +477,14 @@ int change_DATA(node **DATA,int root, int *rootval){
 	unsigned char str[500],str2[500];
 	node *sample;
     char *name[3] = {"男性","女性","その他の性別"};
+    char *prefecture[47] ={"北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
+    "茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県",
+    "新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県",
+    "静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県",
+    "奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県",
+    "徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県",
+    "熊本県","大分県","宮崎県","鹿児島県","沖縄県"
+    };
 
     while(1){
     	printf("内容を変更したいユーザーのメールアドレスを入力してください (終了=0)\n");
@@ -505,7 +576,7 @@ int change_DATA(node **DATA,int root, int *rootval){
             
                 case 3: 
                     printf("\n現在の郵便番号：%d\n",sample->postal);
-        			printf("変更後の郵便番号：");
+        			printf("変更後の郵便番号(ハイフンなし)：");
         			scanf("%d",&ex_postal);
         			sample->postal = ex_postal;
         			printf("\n郵便番号が %d に変更されました\n",sample->postal);
@@ -517,12 +588,20 @@ int change_DATA(node **DATA,int root, int *rootval){
         			scanf("%s",str);
         			sample->address=(char*)realloc(sample->address,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->address,str);
-        			printf("\n住所が %s に変更されました\n",sample->address);
+                    printf("\n住所が %s に変更されました\n",sample->address);
+                    
+                    sample->prefecture = 48; //都道府県割り当て(48は住所に都道府県が無かった場合)
+                    for(i = 0; i < 47; i++){
+                        if(strstr(sample->address, prefecture[i]) != NULL) {
+                            sample->prefecture = i+1;
+                            break;
+                        }
+                    }
         			break;
             
                 case 5: 
                     printf("\n現在の電話番号：%s\n",sample->tell);
-        			printf("変更後の電話番号：");
+        			printf("変更後の電話番号(ハイフンなし)：");
         			scanf("%s",str);
         			sample->tell=(char*)realloc(sample->tell,sizeof(char)*(strlen(str)+1));
         			strcpy(sample->tell,str);
@@ -722,7 +801,7 @@ int delete_DATA(node **DATA, int root) {
 
 int search_DATA(node **DATA, int root){
     int i,j,k,l,m,p;
-    char c[1000], str[1000];
+    char c[1000], str[1000], *ll;
     char chara;
     int born[3];
     char *name[3] = {"男性","女性","その他の性別"};
@@ -763,7 +842,7 @@ int search_DATA(node **DATA, int root){
                         scanf("%s",c);
                         break;
                     case 3:
-                        printf("郵便番号を入力\n");
+                        printf("郵便番号を入力(ハイフンなし)\n");
                         printf("終了する場合は0を入力\n");
                         scanf("%d",&p);
                         break;
@@ -773,7 +852,7 @@ int search_DATA(node **DATA, int root){
                         scanf("%s",c);
                         break;
                     case 5:
-                        printf("電話番号を入力\n");
+                        printf("電話番号を入力(ハイフンなし)\n");
                         printf("終了する場合は'end'と入力\n");
                         scanf("%s",c);
                         break;
@@ -805,10 +884,14 @@ int search_DATA(node **DATA, int root){
                                 else l = 1;
                                 break;
                             case 4:
-                                l = strcmp(c,sample->address);
+                                ll = strstr(sample->address,c);
+                                if(ll != NULL) l = 0;
+                                else l = 1;
                                 break;
                             case 5:
-                                l = strcmp(c,sample->tell);
+                                ll = strstr(sample->tell,c);
+                                if(ll != NULL) l = 0;
+                                else l = 1;
                                 break;
                             case 6:
                                 if(born[0] == sample->born[0] && born[1] == sample->born[1] && born[2] == sample->born[2]) l = 0;
@@ -982,7 +1065,7 @@ void treeprint(node *x, int updown){ //全表示での二分探索木の表示
         else{
             treeprint(x->right, updown);
         }
-        printf("%s %s %s %s %s %d %s %s %s %d年%d月%d日 %s %s\n",
+        printf("%20s %20s %10s %10s %20s %7d %s %s %s %d年%d月%d日 %s %s\n",
                 x->name_ruby[0],x->name_ruby[1],x->name[0],x->name[1],x->nickname,x->postal,
                 x->address,x->tell,x->mail,x->born[0],x->born[1],x->born[2],x->job,name[x->sex]);
         if(updown == 1){
@@ -1102,3 +1185,4 @@ int main() {
     log_system(1,root);//終了時刻と権限の書き出し
     return 0;
 }
+
